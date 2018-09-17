@@ -1,2 +1,0 @@
-# sh
-Created with CodeSandbox
