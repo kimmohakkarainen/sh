@@ -5,7 +5,7 @@ class DummyView extends Component {
   render() {
     return (
       <div>
-        <h1>intentionally left blank</h1>
+        <h1>Blank Page</h1>
       </div>
     );
   }

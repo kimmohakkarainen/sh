@@ -8,40 +8,34 @@ class Menu extends React.Component {
       <Navbar collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/">Rapsa</a>
+            <a href="/">SOVELLUS</a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <IndexLinkContainer to="/day">
+            <IndexLinkContainer to="/">
               <NavItem eventKey={2} href="/">
-                Day
+                Sihteeri
               </NavItem>
             </IndexLinkContainer>
-            <IndexLinkContainer to="/week">
-              <NavItem eventKey={3} href="/">
-                Week
+            <IndexLinkContainer to="/doctor">
+              <NavItem eventKey={3} href="/doctor">
+                Lääkäri
               </NavItem>
             </IndexLinkContainer>
-            <IndexLinkContainer to="/month">
-              <NavItem eventKey={4} href="/month">
-                Month
+            <IndexLinkContainer to="/billing">
+              <NavItem eventKey={4} href="/billing">
+                Laskutus
               </NavItem>
             </IndexLinkContainer>
             {this.props.privileged && (
               <NavDropdown eventKey={5} title="Admin" id="admin-dropdown">
-                <IndexLinkContainer to="/admin/customers">
-                  <MenuItem eventKey={5.2}>Customers</MenuItem>
+                <IndexLinkContainer to="/admin/rights">
+                  <MenuItem eventKey={5.2}>Käyttöoikeudet</MenuItem>
                 </IndexLinkContainer>
                 <IndexLinkContainer to="/admin/reports">
-                  <MenuItem eventKey={5.4}>Reporting</MenuItem>
-                </IndexLinkContainer>
-                <MenuItem divider />
-                <IndexLinkContainer to="/admin/other">
-                  <MenuItem disabled eventKey={5.4}>
-                    Other
-                  </MenuItem>
+                  <MenuItem eventKey={5.4}>Raportit</MenuItem>
                 </IndexLinkContainer>
               </NavDropdown>
             )}
@@ -53,19 +47,11 @@ class Menu extends React.Component {
               id="user-dropdown"
             >
               <IndexLinkContainer to="/password">
-                <MenuItem eventKey={6.1}>Change Password</MenuItem>
+                <MenuItem eventKey={6.1}>Vaihda salasana</MenuItem>
               </IndexLinkContainer>
-              <IndexLinkContainer to="/pref">
-                <MenuItem eventKey={6.2}>Preferences</MenuItem>
-              </IndexLinkContainer>
-              {this.props.privileged && (
-                <IndexLinkContainer to="/pref/projects">
-                  <MenuItem eventKey={6.3}>Project Preferences</MenuItem>
-                </IndexLinkContainer>
-              )}
               <MenuItem divider />
               <IndexLinkContainer to="/logout">
-                <MenuItem eventKey={6.4}>Logout</MenuItem>
+                <MenuItem eventKey={6.4}>Kirjaudu ulos</MenuItem>
               </IndexLinkContainer>
             </NavDropdown>
           </Nav>
