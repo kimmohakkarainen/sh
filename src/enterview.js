@@ -8,8 +8,31 @@ import {
   FormGroup,
   ControlLabel,
   FormControl,
-  DropdownButton
+  DropdownButton,
+  MenuItem
 } from "react-bootstrap";
+
+const Valinnat = () => {
+  return (
+    <DropdownButton title="Tutkimus">
+      <MenuItem eventKey={1}>Datscan</MenuItem>
+      <MenuItem eventKey={2}>Luuston gammakuvaus</MenuItem>
+      <MenuItem eventKey={3}>Munuaisfunktion gammakuvaus</MenuItem>
+      <MenuItem eventKey={4}>pH 24 h</MenuItem>
+      <MenuItem eventKey={5}>Bp 24 h</MenuItem>
+      <MenuItem eventKey={6}>Keuhkoventilaatio / perfuusio</MenuItem>
+      <MenuItem eventKey={7}>
+        Kilpirauhassyövän metastaasien gammakuvaus(koko keho ja SPECT / CT)
+      </MenuItem>
+      <MenuItem eventKey={8}>Lisäkilpirauhasen SPECT / CT</MenuItem>
+      <MenuItem eventKey={9}>EKG 24 h</MenuItem>
+      <MenuItem eventKey={10}>Luuston gammakuvaus(SPECT / CT)</MenuItem>
+      <MenuItem eventKey={11}>Muut isotooppitutkimukset</MenuItem>
+      <MenuItem eventKey={12}>Muu tutkimus</MenuItem>
+      <MenuItem eventKey={13}>EKG 48 h</MenuItem>
+    </DropdownButton>
+  );
+};
 
 const EnterPanel = () => {
   return (
@@ -33,10 +56,10 @@ const EnterPanel = () => {
       <Row>
         <FormGroup>
           <Col xs={4}>
-            <DropdownButton title="Tutkimus" />
+            <Valinnat />
           </Col>
           <Col componentClass={ControlLabel} xs={2}>
-            Sukunimi
+            Vastaanotto
           </Col>
           <Col xs={6}>
             <FormControl type="text" placeHolder="Sukunimi" />
@@ -48,11 +71,56 @@ const EnterPanel = () => {
 };
 
 const NewEntriesPanel = () => {
-  return <div>New Entries</div>;
+  return (
+    <Grid>
+      <Row>
+        <Col xs={2}>24.10.2018</Col>
+        <Col xs={2}>123456-1234</Col>
+        <Col xs={2}>Möttönen</Col>
+        <Col xs={6}>Datscan</Col>
+      </Row>
+      <Row>
+        <Col xs={2}>15.11.2018</Col>
+        <Col xs={2}>345612-5134</Col>
+        <Col xs={2}>Litmanen</Col>
+        <Col xs={6}>Luuston gammakuvaus</Col>
+      </Row>
+      <Row>
+        <Col xs={2} />
+        <Col xs={2}>011248-5412</Col>
+        <Col xs={2}>Räikkönen</Col>
+        <Col xs={6}>Datscan</Col>
+      </Row>
+    </Grid>
+  );
 };
 
 const InProgressPanel = () => {
-  return <div>IN Progress</div>;
+  return (
+    <Grid>
+      <Row>
+        <Col xs={3}>Tohtori Tolonen</Col>
+        <Col xs={2}>26.9.2018</Col>
+        <Col xs={2}>123456-1234</Col>
+        <Col xs={2}>Möttönen</Col>
+        <Col xs={3}>Datscan</Col>
+      </Row>
+      <Row>
+        <Col xs={3}>Tohtori Liimatainen</Col>
+        <Col xs={2}>30.9.2018</Col>
+        <Col xs={2}>345612-5134</Col>
+        <Col xs={2}>Litmanen</Col>
+        <Col xs={3}>Luuston gammakuvaus</Col>
+      </Row>
+      <Row>
+        <Col xs={3}>Tohtori Venäläinen</Col>
+        <Col xs={2}>30.9.2018</Col>
+        <Col xs={2}>345612-5134</Col>
+        <Col xs={2}>Litmanen</Col>
+        <Col xs={3}>Luuston gammakuvaus</Col>
+      </Row>
+    </Grid>
+  );
 };
 
 class EnterView extends Component {

@@ -16,7 +16,7 @@ class Menu extends React.Component {
           <Nav>
             <IndexLinkContainer to="/">
               <NavItem eventKey={2} href="/">
-                Sihteeri
+                Lähetteet
               </NavItem>
             </IndexLinkContainer>
             <IndexLinkContainer to="/doctor">
