@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import {
   Panel,
+  Button,
   Grid,
   Row,
   Col,
@@ -9,64 +10,71 @@ import {
   ControlLabel,
   FormControl,
   DropdownButton,
-  MenuItem
+  MenuItem,
+  HelpBlock
 } from "react-bootstrap";
 
 const Valinnat = () => {
   return (
-    <DropdownButton title="Tutkimus">
-      <MenuItem eventKey={1}>Datscan</MenuItem>
-      <MenuItem eventKey={2}>Luuston gammakuvaus</MenuItem>
-      <MenuItem eventKey={3}>Munuaisfunktion gammakuvaus</MenuItem>
-      <MenuItem eventKey={4}>pH 24 h</MenuItem>
-      <MenuItem eventKey={5}>Bp 24 h</MenuItem>
-      <MenuItem eventKey={6}>Keuhkoventilaatio / perfuusio</MenuItem>
-      <MenuItem eventKey={7}>
+    <FormControl componentClass="select">
+      <option>Datscan</option>
+      <option>Luuston gammakuvaus</option>
+      <option>Munuaisfunktion gammakuvaus</option>
+      <option>pH 24 h</option>
+      <option>Bp 24 h</option>
+      <option>Keuhkoventilaatio / perfuusio</option>
+      <option>
         Kilpirauhassyövän metastaasien gammakuvaus(koko keho ja SPECT / CT)
-      </MenuItem>
-      <MenuItem eventKey={8}>Lisäkilpirauhasen SPECT / CT</MenuItem>
-      <MenuItem eventKey={9}>EKG 24 h</MenuItem>
-      <MenuItem eventKey={10}>Luuston gammakuvaus(SPECT / CT)</MenuItem>
-      <MenuItem eventKey={11}>Muut isotooppitutkimukset</MenuItem>
-      <MenuItem eventKey={12}>Muu tutkimus</MenuItem>
-      <MenuItem eventKey={13}>EKG 48 h</MenuItem>
-    </DropdownButton>
+      </option>
+      <option>Lisäkilpirauhasen SPECT / CT</option>
+      <option>EKG 24 h</option>
+      <option>Luuston gammakuvaus(SPECT / CT)</option>
+      <option>Muut isotooppitutkimukset</option>
+      <option>Muu tutkimus</option>
+      <option>EKG 48 h</option>
+    </FormControl>
   );
 };
 
-const EnterPanel = () => {
+const EnterPanel = props => {
+  console.log(props);
   return (
-    <Grid>
-      <Row>
-        <FormGroup>
-          <Col componentClass={ControlLabel} xs={1}>
-            SOTU
-          </Col>
-          <Col xs={3}>
-            <FormControl type="text" placeHolder="000000-0000" />
-          </Col>
-          <Col componentClass={ControlLabel} xs={2}>
-            Sukunimi
-          </Col>
-          <Col xs={6}>
-            <FormControl type="text" placeHolder="Sukunimi" />
-          </Col>
-        </FormGroup>
-      </Row>
-      <Row>
-        <FormGroup>
-          <Col xs={4}>
-            <Valinnat />
-          </Col>
-          <Col componentClass={ControlLabel} xs={2}>
-            Vastaanotto
-          </Col>
-          <Col xs={6}>
-            <FormControl type="text" placeHolder="Sukunimi" />
-          </Col>
-        </FormGroup>
-      </Row>
-    </Grid>
+    <div>
+      <FormGroup validationState="error">
+        <ControlLabel>Sosiaaliturvatunnus</ControlLabel>
+        <FormControl type="text" placeholder="000000-0000" />
+        {false && (
+          <HelpBlock>Syötä tähän henkilön sosiaaliturvatunnus</HelpBlock>
+        )}
+      </FormGroup>
+      <FormGroup validationState="success">
+        <ControlLabel>Sukunimi</ControlLabel>
+        <FormControl type="text" placeholder="Sukunimi" />
+        {false && <HelpBlock>Syötä tähän henkilön sukunimi</HelpBlock>}
+      </FormGroup>
+      <FormGroup validationState="success">
+        <ControlLabel>Tutkimus</ControlLabel>
+        <Valinnat />
+        {false && <HelpBlock>Syötä tähän tutkimusmuoto</HelpBlock>}
+      </FormGroup>
+      <FormGroup validationState="success">
+        <ControlLabel>Tutkimuspäivä</ControlLabel>
+        <FormControl type="date" />
+      </FormGroup>
+      <FormGroup validationState="success">
+        <ControlLabel>Lisätiedot</ControlLabel>
+        <FormControl
+          componentClass="textarea"
+          placeholder="Tähän mahdolliset lisätiedot"
+        />
+        {false && <HelpBlock>Syötä tähän henkilön sukunimi</HelpBlock>}
+      </FormGroup>
+      <FormGroup validationState="success">
+        <ControlLabel>Vastaanottopäivä</ControlLabel>
+        <FormControl type="date" />
+      </FormGroup>
+      <Button>Talleta</Button>
+    </div>
   );
 };
 
@@ -124,6 +132,19 @@ const InProgressPanel = () => {
 };
 
 class EnterView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      date: new Date()
+    };
+    this.onDayChange = this.onDayChange.bind(this);
+  }
+
+  onDayChange(selectedDay, modifiers, dayPickerInput) {
+    console.log({ selectedDay, modifiers, dayPickerInput });
+    this.setState({ date: selectedDay });
+  }
+
   render() {
     return (
       <div>
@@ -135,7 +156,10 @@ class EnterView extends Component {
           </Panel.Heading>
           <Panel.Collapse>
             <Panel.Body>
-              <EnterPanel />
+              <EnterPanel
+                onDayChange={this.onDayChange}
+                value={this.state.date}
+              />
             </Panel.Body>
           </Panel.Collapse>
         </Panel>
