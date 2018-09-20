@@ -5,6 +5,7 @@ import Menu from "./menu";
 
 import DummyView from "./dummyview";
 import EnterView from "./enterview";
+import DoctorView from "./doctorview";
 
 class App extends Component {
   render() {
@@ -14,7 +15,7 @@ class App extends Component {
           <div>
             <Menu personName="Matti Meikäläinen" privileged={true} />
             <Route exact path="/" component={EnterView} />
-            <Route exact path="/doctor" component={DummyView} />
+            <Route exact path="/doctor" component={DoctorView} />
             <Route exact path="/billing" component={DummyView} />
             <Route exact path="/admin/rights" component={DummyView} />
             <Route exact path="/admin/reports" component={DummyView} />

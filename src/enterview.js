@@ -11,7 +11,8 @@ import {
   FormControl,
   DropdownButton,
   MenuItem,
-  HelpBlock
+  HelpBlock,
+  Table
 } from "react-bootstrap";
 
 const Valinnat = () => {
@@ -40,28 +41,28 @@ const EnterPanel = props => {
   console.log(props);
   return (
     <div>
-      <FormGroup validationState="error">
+      <FormGroup>
         <ControlLabel>Sosiaaliturvatunnus</ControlLabel>
         <FormControl type="text" placeholder="000000-0000" />
         {false && (
           <HelpBlock>Syötä tähän henkilön sosiaaliturvatunnus</HelpBlock>
         )}
       </FormGroup>
-      <FormGroup validationState="success">
+      <FormGroup>
         <ControlLabel>Sukunimi</ControlLabel>
         <FormControl type="text" placeholder="Sukunimi" />
         {false && <HelpBlock>Syötä tähän henkilön sukunimi</HelpBlock>}
       </FormGroup>
-      <FormGroup validationState="success">
+      <FormGroup>
         <ControlLabel>Tutkimus</ControlLabel>
         <Valinnat />
         {false && <HelpBlock>Syötä tähän tutkimusmuoto</HelpBlock>}
       </FormGroup>
-      <FormGroup validationState="success">
+      <FormGroup>
         <ControlLabel>Tutkimuspäivä</ControlLabel>
         <FormControl type="date" />
       </FormGroup>
-      <FormGroup validationState="success">
+      <FormGroup>
         <ControlLabel>Lisätiedot</ControlLabel>
         <FormControl
           componentClass="textarea"
@@ -69,65 +70,86 @@ const EnterPanel = props => {
         />
         {false && <HelpBlock>Syötä tähän henkilön sukunimi</HelpBlock>}
       </FormGroup>
-      <FormGroup validationState="success">
+      <FormGroup>
         <ControlLabel>Vastaanottopäivä</ControlLabel>
         <FormControl type="date" />
       </FormGroup>
-      <Button>Talleta</Button>
+      <Button bsStyle="primary">Talleta</Button>
     </div>
   );
 };
 
 const NewEntriesPanel = () => {
   return (
-    <Grid>
-      <Row>
-        <Col xs={2}>24.10.2018</Col>
-        <Col xs={2}>123456-1234</Col>
-        <Col xs={2}>Möttönen</Col>
-        <Col xs={6}>Datscan</Col>
-      </Row>
-      <Row>
-        <Col xs={2}>15.11.2018</Col>
-        <Col xs={2}>345612-5134</Col>
-        <Col xs={2}>Litmanen</Col>
-        <Col xs={6}>Luuston gammakuvaus</Col>
-      </Row>
-      <Row>
-        <Col xs={2} />
-        <Col xs={2}>011248-5412</Col>
-        <Col xs={2}>Räikkönen</Col>
-        <Col xs={6}>Datscan</Col>
-      </Row>
-    </Grid>
+    <Table striped bordered condensed hover>
+      <thead>
+        <tr>
+          <th>Vastaanottopäivä</th>
+          <th>Sosiaaliturvatunnus</th>
+          <th>Sukunimi</th>
+          <th>Tutkimus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>24.10.2018</td>
+          <td>123456-1234</td>
+          <td>Möttönen</td>
+          <td>Datscan</td>
+        </tr>
+        <tr>
+          <td>15.11.2018</td>
+          <td>345602A5134</td>
+          <td>Litmanen</td>
+          <td>Luuston gammakuvaus</td>
+        </tr>
+        <tr>
+          <td />
+          <td>011248-5412</td>
+          <td>Räikkönen</td>
+          <td>Datscan</td>
+        </tr>
+      </tbody>
+    </Table>
   );
 };
 
 const InProgressPanel = () => {
   return (
-    <Grid>
-      <Row>
-        <Col xs={3}>Tohtori Tolonen</Col>
-        <Col xs={2}>26.9.2018</Col>
-        <Col xs={2}>123456-1234</Col>
-        <Col xs={2}>Möttönen</Col>
-        <Col xs={3}>Datscan</Col>
-      </Row>
-      <Row>
-        <Col xs={3}>Tohtori Liimatainen</Col>
-        <Col xs={2}>30.9.2018</Col>
-        <Col xs={2}>345612-5134</Col>
-        <Col xs={2}>Litmanen</Col>
-        <Col xs={3}>Luuston gammakuvaus</Col>
-      </Row>
-      <Row>
-        <Col xs={3}>Tohtori Venäläinen</Col>
-        <Col xs={2}>30.9.2018</Col>
-        <Col xs={2}>345612-5134</Col>
-        <Col xs={2}>Litmanen</Col>
-        <Col xs={3}>Luuston gammakuvaus</Col>
-      </Row>
-    </Grid>
+    <Table striped bordered condensed hover>
+      <thead>
+        <tr>
+          <th>Lääkäri</th>
+          <th>Vastaanottopäivä</th>
+          <th>Sosiaaliturvatunnus</th>
+          <th>Sukunimi</th>
+          <th>Tutkimus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td xs={3}>Tohtori Tolonen</td>
+          <td xs={2}>26.9.2018</td>
+          <td xs={2}>123456-1234</td>
+          <td xs={2}>Möttönen</td>
+          <td xs={3}>Datscan</td>
+        </tr>
+        <tr>
+          <td xs={3}>Tohtori Liimatainen</td>
+          <td xs={2}>30.9.2018</td>
+          <td xs={2}>345612-5134</td>
+          <td xs={2}>Litmanen</td>
+          <td xs={3}>Luuston gammakuvaus</td>
+        </tr>
+        <tr>
+          <td xs={3}>Tohtori Venäläinen</td>
+          <td xs={2}>30.9.2018</td>
+          <td xs={2}>345612-5134</td>
+          <td xs={2}>Litmanen</td>
+          <td xs={3}>Luuston gammakuvaus</td>
+        </tr>
+      </tbody>
+    </Table>
   );
 };
 
@@ -163,7 +185,7 @@ class EnterView extends Component {
             </Panel.Body>
           </Panel.Collapse>
         </Panel>
-        <Panel bsStyle="warning" defaultExpanded>
+        <Panel defaultExpanded>
           <Panel.Heading>
             <Panel.Title toggle componentClass="h3">
               Uudet Lähetteet
@@ -175,7 +197,7 @@ class EnterView extends Component {
             </Panel.Body>
           </Panel.Collapse>
         </Panel>
-        <Panel bsStyle="success">
+        <Panel defaultExpanded>
           <Panel.Heading>
             <Panel.Title toggle componentClass="h3">
               Keskeneräiset Lähetteet
