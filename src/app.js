@@ -6,6 +6,7 @@ import Menu from "./menu";
 import DummyView from "./dummyview";
 import EnterView from "./enterview";
 import DoctorView from "./doctorview";
+import BarChart from "./barchart";
 
 class App extends Component {
   render() {
@@ -18,7 +19,7 @@ class App extends Component {
             <Route exact path="/doctor" component={DoctorView} />
             <Route exact path="/billing" component={DummyView} />
             <Route exact path="/admin/rights" component={DummyView} />
-            <Route exact path="/admin/reports" component={DummyView} />
+            <Route exact path="/admin/reports" component={BarChart} />
             <Route exact path="/password" component={DummyView} />
             <Route exact path="/logout" component={DummyView} />
           </div>
