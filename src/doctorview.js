@@ -15,50 +15,7 @@ import {
   Table
 } from "react-bootstrap";
 
-const NewEntriesPanel = () => {
-  return (
-    <Table striped bordered condensed hover>
-      <thead>
-        <tr>
-          <th />
-          <th>Vastaanottopäivä</th>
-          <th>Sosiaaliturvatunnus</th>
-          <th>Sukunimi</th>
-          <th>Tutkimus</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <button>Työlistalle</button>
-          </td>
-          <td>24.10.2018</td>
-          <td>123456-1234</td>
-          <td>Möttönen</td>
-          <td>Datscan</td>
-        </tr>
-        <tr>
-          <td>
-            <button>Työlistalle</button>
-          </td>
-          <td>15.11.2018</td>
-          <td>345602A5134</td>
-          <td>Litmanen</td>
-          <td>Luuston gammakuvaus</td>
-        </tr>
-        <tr>
-          <td>
-            <button>Työlistalle</button>
-          </td>
-          <td />
-          <td>011248-5412</td>
-          <td>Räikkönen</td>
-          <td>Datscan</td>
-        </tr>
-      </tbody>
-    </Table>
-  );
-};
+import NewEntries from "./panels/newentries.js";
 
 const InProgressPanel = () => {
   return (
@@ -133,7 +90,7 @@ class DoctorView extends Component {
           </Panel.Heading>
           <Panel.Collapse>
             <Panel.Body>
-              <NewEntriesPanel />
+              <NewEntries />
             </Panel.Body>
           </Panel.Collapse>
         </Panel>
