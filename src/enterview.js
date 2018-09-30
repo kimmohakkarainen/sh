@@ -14,6 +14,7 @@ import {
   HelpBlock,
   Table
 } from "react-bootstrap";
+import { connect } from "react-redux";
 
 const Valinnat = () => {
   return (
@@ -79,7 +80,7 @@ const EnterPanel = props => {
   );
 };
 
-const NewEntriesPanel = () => {
+const Entries = props => {
   return (
     <Table striped bordered condensed hover>
       <thead>
@@ -88,66 +89,21 @@ const NewEntriesPanel = () => {
           <th>Sosiaaliturvatunnus</th>
           <th>Sukunimi</th>
           <th>Tutkimus</th>
+          <th>Lisätiedot</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>24.10.2018</td>
-          <td>123456-1234</td>
-          <td>Möttönen</td>
-          <td>Datscan</td>
-        </tr>
-        <tr>
-          <td>15.11.2018</td>
-          <td>345602A5134</td>
-          <td>Litmanen</td>
-          <td>Luuston gammakuvaus</td>
-        </tr>
-        <tr>
-          <td />
-          <td>011248-5412</td>
-          <td>Räikkönen</td>
-          <td>Datscan</td>
-        </tr>
-      </tbody>
-    </Table>
-  );
-};
-
-const InProgressPanel = () => {
-  return (
-    <Table striped bordered condensed hover>
-      <thead>
-        <tr>
-          <th>Lääkäri</th>
-          <th>Vastaanottopäivä</th>
-          <th>Sosiaaliturvatunnus</th>
-          <th>Sukunimi</th>
-          <th>Tutkimus</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td xs={3}>Tohtori Tolonen</td>
-          <td xs={2}>26.9.2018</td>
-          <td xs={2}>123456-1234</td>
-          <td xs={2}>Möttönen</td>
-          <td xs={3}>Datscan</td>
-        </tr>
-        <tr>
-          <td xs={3}>Tohtori Liimatainen</td>
-          <td xs={2}>30.9.2018</td>
-          <td xs={2}>345612-5134</td>
-          <td xs={2}>Litmanen</td>
-          <td xs={3}>Luuston gammakuvaus</td>
-        </tr>
-        <tr>
-          <td xs={3}>Tohtori Venäläinen</td>
-          <td xs={2}>30.9.2018</td>
-          <td xs={2}>345612-5134</td>
-          <td xs={2}>Litmanen</td>
-          <td xs={3}>Luuston gammakuvaus</td>
-        </tr>
+        {props.tasks.map(function(task) {
+          return (
+            <tr key={task.taskId}>
+              <td>{task.vastaanottoPaiva}</td>
+              <td>{task.sotu}</td>
+              <td>{task.sukunimi}</td>
+              <td>{task.tutkimus}</td>
+              <td>{task.lisatiedot}</td>
+            </tr>
+          );
+        })}
       </tbody>
     </Table>
   );
@@ -185,33 +141,46 @@ class EnterView extends Component {
             </Panel.Body>
           </Panel.Collapse>
         </Panel>
-        <Panel defaultExpanded>
-          <Panel.Heading>
-            <Panel.Title toggle componentClass="h3">
-              Uudet Lähetteet
-            </Panel.Title>
-          </Panel.Heading>
-          <Panel.Collapse>
-            <Panel.Body>
-              <NewEntriesPanel />
-            </Panel.Body>
-          </Panel.Collapse>
-        </Panel>
-        <Panel defaultExpanded>
-          <Panel.Heading>
-            <Panel.Title toggle componentClass="h3">
-              Keskeneräiset Lähetteet
-            </Panel.Title>
-          </Panel.Heading>
-          <Panel.Collapse>
-            <Panel.Body>
-              <InProgressPanel />
-            </Panel.Body>
-          </Panel.Collapse>
-        </Panel>
+        {this.props.newTasks.length > 0 && (
+          <Panel defaultExpanded>
+            <Panel.Heading>
+              <Panel.Title toggle componentClass="h3">
+                Uudet Lähetteet
+              </Panel.Title>
+            </Panel.Heading>
+            <Panel.Collapse>
+              <Panel.Body>
+                <Entries tasks={this.props.newTasks} />
+              </Panel.Body>
+            </Panel.Collapse>
+          </Panel>
+        )}
+        {this.props.assignedTasks.length > 0 && (
+          <Panel defaultExpanded>
+            <Panel.Heading>
+              <Panel.Title toggle componentClass="h3">
+                Keskeneräiset Lähetteet
+              </Panel.Title>
+            </Panel.Heading>
+            <Panel.Collapse>
+              <Panel.Body>
+                <Entries tasks={this.props.assignedTasks} />
+              </Panel.Body>
+            </Panel.Collapse>
+          </Panel>
+        )}
       </div>
     );
   }
 }
 
-export default EnterView;
+function mapStateToProps(state) {
+  const person = state.person;
+  return {
+    person: state.person,
+    newTasks: state.newTasks,
+    assignedTasks: state.assignedTasks
+  };
+}
+
+export default connect(mapStateToProps)(EnterView);
