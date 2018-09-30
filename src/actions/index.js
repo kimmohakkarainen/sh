@@ -3,6 +3,36 @@ export function uniqueId() {
   return _id++;
 }
 
+export function createTask({ Person, Task }) {
+  return {
+    type: "CREATE_TASK",
+    payload: {
+      Person,
+      Task
+    }
+  };
+}
+
+export function assignTask({ Person, Task }) {
+  return {
+    type: "ASSIGN_TASK",
+    payload: {
+      Person,
+      Task
+    }
+  };
+}
+
+export function finishTask({ Person, Task }) {
+  return {
+    type: "FINISH_TASK",
+    payload: {
+      Person,
+      Task
+    }
+  };
+}
+
 /*
 export function createCustomer({ customerName, projectDefault }) {
   return {

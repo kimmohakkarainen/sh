@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 
 import { Button, Table } from "react-bootstrap";
 import ActionButton from "./actionbutton";
-import { assignTask } from "../actions";
+import { finishTask } from "../actions";
 
-class NewEntries extends Component {
+class InProgressEntries extends Component {
   constructor(props) {
     super(props);
   }
@@ -16,7 +16,7 @@ class NewEntries extends Component {
 
     return (
       <div>
-        {this.props.newTasks.length > 0 && (
+        {this.props.assignedTasks.length > 0 && (
           <Table striped bordered condensed hover>
             <thead>
               <tr>
@@ -29,14 +29,14 @@ class NewEntries extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.newTasks.map(function(task) {
+              {this.props.assignedTasks.map(function(task) {
                 return (
                   <tr key={task.taskId}>
                     <td>
                       <ActionButton
                         task={task}
-                        createAction={assignTask}
-                        text="Työlistalle"
+                        createAction={finishTask}
+                        text="Valmis"
                       />
                     </td>
                     <td>{task.vastaanottoPaiva}</td>
@@ -56,7 +56,7 @@ class NewEntries extends Component {
 }
 
 function mapStateToProps(state) {
-  return { newTasks: state.newTasks, person: state.person };
+  return { assignedTasks: state.assignedTasks };
 }
 
-export default connect(mapStateToProps)(NewEntries);
+export default connect(mapStateToProps)(InProgressEntries);

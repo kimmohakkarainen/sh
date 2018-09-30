@@ -16,6 +16,7 @@ import {
 } from "react-bootstrap";
 
 import NewEntries from "./panels/newentries.js";
+import InProgressEntries from "./panels/inprogressentries.js";
 
 const InProgressPanel = () => {
   return (
@@ -78,7 +79,7 @@ class DoctorView extends Component {
           </Panel.Heading>
           <Panel.Collapse>
             <Panel.Body>
-              <InProgressPanel />
+              <InProgressEntries />
             </Panel.Body>
           </Panel.Collapse>
         </Panel>
