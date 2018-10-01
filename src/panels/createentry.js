@@ -23,74 +23,139 @@ import { createTask } from "../actions";
 class CreateEntry extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      taskId: null,
-      sotu: null,
-      sukunimi: null,
-      tutkimus: null,
-      tutkimusPaiva: null,
-      vastaanottoPaiva: null,
-      lisatiedot: null,
-      laakari: null
-    };
+    this.state = this.clearValues();
     this.handleClick = this.handleClick.bind(this);
+    this.handleSotu = this.handleSotu.bind(this);
+    this.handleSukunimi = this.handleSukunimi.bind(this);
+  }
+
+  clearValues() {
+    return {
+      validation: false,
+      sotu: "",
+      sotuValid: null,
+      sukunimi: "",
+      sukunimiValid: null,
+      tutkimus: "",
+      tutkimusValid: null,
+      tutkimusPaiva: "",
+      tutkimusPaivaValid: null,
+      vastaanottoPaiva: "",
+      vastaanottoPaivaValid: null,
+      lisatiedot: ""
+    };
+  }
+
+  handleSotu(v) {
+    const value = v.target.value;
+    const valid = value.length === 11 ? "success" : "error";
+    console.log(valid);
+    this.setState({
+      sotu: value,
+      sotuValid: valid
+    });
+  }
+
+  handleSukunimi(v) {
+    const value = v.target.value;
+    const valid = value.length > 3 ? "success" : "error";
+    console.log(valid);
+    this.setState({
+      sukunimi: value,
+      sukunimiValid: valid
+    });
   }
 
   handleClick() {
-    console.log(this.props);
-    const parms = createTask({
-      Person: this.props.person,
-      Task: this.state
+    console.log(this.state);
+    this.setState({
+      sotuValid: this.state.sotuValid == null ? "error" : this.state.sotuValid,
+      sukunimiValid:
+        this.state.sukunimiValid == null ? "error" : this.state.sukunimiValid,
+      tutkimusValid:
+        this.state.tutkimusValid == null ? "error" : this.state.tutkimusValid,
+      tutkimusPaivaValid:
+        this.state.tutkimusPaivaValid == null
+          ? "error"
+          : this.state.tutkimusPaivaValid,
+      vastaanottoPaivaValid:
+        this.state.vastaanottoPaivaValid == null
+          ? "error"
+          : this.state.vastaanottoPaivaValid
     });
-    this.props.dispatch(parms);
+    if (
+      this.state.sotuValid === "success" &&
+      this.state.sukunimiValid === "success" &&
+      this.state.tutkimusValid === "success" &&
+      this.state.tutkimusPaivaValid === "success" &&
+      this.state.vastaanottoPaivaValid === "success"
+    ) {
+      const parms = createTask({
+        Person: this.props.person,
+        Task: {
+          taskId: null,
+          sotu: this.state.sotu,
+          sukunimi: this.state.sukunimi,
+          tutkimus: this.state.tutkimus,
+          tutkimusPaiva: this.state.tutkimusPaiva,
+          vastaanottoPaiva: this.state.vastaanottoPaiva,
+          lisatiedot: this.state.lisatiedot,
+          laakari: null
+        }
+      });
+      this.props.dispatch(parms);
+      this.setState(this.clearValues());
+    }
   }
 
   render() {
     return (
       <div>
-        <FormGroup>
+        <FormGroup validationState={this.state.sotuValid}>
           <ControlLabel>Sosiaaliturvatunnus</ControlLabel>
           <FormControl
             type="text"
             placeholder="000000-0000"
             value={this.state.sotu}
-            onChange={e => {
-              this.setState({ sotu: e.target.value });
-            }}
+            onChange={this.handleSotu}
           />
           {false && (
             <HelpBlock>Syötä tähän henkilön sosiaaliturvatunnus</HelpBlock>
           )}
         </FormGroup>
-        <FormGroup>
+        <FormGroup validationState={this.state.sukunimiValid}>
           <ControlLabel>Sukunimi</ControlLabel>
           <FormControl
             type="text"
             placeholder="Sukunimi"
             value={this.state.sukunimi}
-            onChange={e => {
-              this.setState({ sukunimi: e.target.value });
-            }}
+            onChange={this.handleSukunimi}
           />
           {false && <HelpBlock>Syötä tähän henkilön sukunimi</HelpBlock>}
         </FormGroup>
-        <FormGroup>
+        <FormGroup validationState={this.state.tutkimusValid}>
           <ControlLabel>Tutkimus</ControlLabel>
           <TutkimusValinnat
             value={this.state.tutkimus}
             onChange={e => {
-              this.setState({ tutkimus: e.target.value });
+              this.setState({
+                tutkimus: e.target.value,
+                tutkimusValid: "success"
+              });
             }}
           />
           {false && <HelpBlock>Syötä tähän tutkimusmuoto</HelpBlock>}
         </FormGroup>
-        <FormGroup>
+        <FormGroup validationState={this.state.tutkimusPaivaValid}>
           <ControlLabel>Tutkimuspäivä</ControlLabel>
           <FormControl
             type="date"
             value={this.state.tutkimusPaiva}
             onChange={e => {
-              this.setState({ tutkimusPaiva: e.target.value });
+              this.setState({
+                tutkimusPaiva: e.target.value,
+                tutkimusPaivaValid: "success"
+              });
             }}
           />
         </FormGroup>
@@ -106,13 +171,16 @@ class CreateEntry extends Component {
           />
           {false && <HelpBlock>Syötä tähän henkilön sukunimi</HelpBlock>}
         </FormGroup>
-        <FormGroup>
+        <FormGroup validationState={this.state.vastaanottoPaivaValid}>
           <ControlLabel>Vastaanottopäivä</ControlLabel>
           <FormControl
             type="date"
             value={this.state.vastaanottoPaiva}
             onChange={e => {
-              this.setState({ tutkimusPaiva: e.target.value });
+              this.setState({
+                vastaanottoPaiva: e.target.value,
+                vastaanottoPaivaValid: "success"
+              });
             }}
           />
         </FormGroup>
