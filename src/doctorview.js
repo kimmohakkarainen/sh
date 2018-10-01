@@ -1,71 +1,9 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import {
-  Panel,
-  Button,
-  Grid,
-  Row,
-  Col,
-  FormGroup,
-  ControlLabel,
-  FormControl,
-  DropdownButton,
-  MenuItem,
-  HelpBlock,
-  Table
-} from "react-bootstrap";
+import { Panel } from "react-bootstrap";
 
 import NewEntries from "./panels/newentries.js";
 import InProgressEntries from "./panels/inprogressentries.js";
-
-const InProgressPanel = () => {
-  return (
-    <Table striped bordered condensed hover>
-      <thead>
-        <tr>
-          <th />
-          <th>Vastaanottopäivä</th>
-          <th>Sosiaaliturvatunnus</th>
-          <th>Sukunimi</th>
-          <th>Tutkimus</th>
-          <th>Lisätiedot</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <button>Valmis</button>
-          </td>
-          <td>26.9.2018</td>
-          <td>123456-1234</td>
-          <td>Möttönen</td>
-          <td>Datscan</td>
-          <td>Jalka poikki. Kulkee keippien avulla</td>
-        </tr>
-        <tr>
-          <td>
-            <button>Valmis</button>
-          </td>
-          <td>30.9.2018</td>
-          <td>345612-5134</td>
-          <td>Litmanen</td>
-          <td>Luuston gammakuvaus</td>
-          <td />
-        </tr>
-        <tr>
-          <td>
-            <button>Valmis</button>
-          </td>
-          <td>30.9.2018</td>
-          <td>345612-5134</td>
-          <td>Litmanen</td>
-          <td>Luuston gammakuvaus</td>
-          <td>Karkasi kesken tutkimuksen tupakalle</td>
-        </tr>
-      </tbody>
-    </Table>
-  );
-};
 
 class DoctorView extends Component {
   render() {
