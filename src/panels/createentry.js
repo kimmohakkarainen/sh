@@ -5,12 +5,16 @@ import { connect } from "react-redux";
 import {
   Panel,
   Button,
+  ToggleButton,
+  ButtonToolbar,
+  ToggleButtonGroup,
   Grid,
   Row,
   Col,
   FormGroup,
   ControlLabel,
   FormControl,
+  InputGroup,
   DropdownButton,
   MenuItem,
   HelpBlock,
@@ -27,6 +31,7 @@ class CreateEntry extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleHetu = this.handleHetu.bind(this);
     this.handleSukunimi = this.handleSukunimi.bind(this);
+    this.handleEsitietolomake = this.handleEsitietolomake.bind(this);
   }
 
   clearValues() {
@@ -42,6 +47,9 @@ class CreateEntry extends Component {
       tutkimusPaivaValid: null,
       vastaanottoPaiva: "",
       vastaanottoPaivaValid: null,
+      esitietolomake: "",
+      esitietolomakeValid: null,
+      esitietolomakeExpanded: false,
       lisatiedot: ""
     };
   }
@@ -66,6 +74,16 @@ class CreateEntry extends Component {
     });
   }
 
+  handleEsitietolomake(v) {
+    const value = v.target.value;
+    const valid = value.length > 3 ? "success" : "error";
+    console.log(valid);
+    this.setState({
+      esitietolomake: value,
+      esitietolomakeValid: valid
+    });
+  }
+
   handleClick() {
     console.log(this.state);
     this.setState({
@@ -77,18 +95,15 @@ class CreateEntry extends Component {
       tutkimusPaivaValid:
         this.state.tutkimusPaivaValid == null
           ? "error"
-          : this.state.tutkimusPaivaValid,
-      vastaanottoPaivaValid:
-        this.state.vastaanottoPaivaValid == null
-          ? "error"
-          : this.state.vastaanottoPaivaValid
+          : this.state.tutkimusPaivaValid
     });
     if (
       this.state.hetuValid === "success" &&
       this.state.sukunimiValid === "success" &&
       this.state.tutkimusValid === "success" &&
       this.state.tutkimusPaivaValid === "success" &&
-      this.state.vastaanottoPaivaValid === "success"
+      this.state.vastaanottoPaivaValid === "success" &&
+      this.state.esitietolomakeValid === "success"
     ) {
       const parms = createTask({
         Person: this.props.person,
@@ -100,6 +115,7 @@ class CreateEntry extends Component {
           tutkimusPaiva: this.state.tutkimusPaiva,
           vastaanottoPaiva: this.state.vastaanottoPaiva,
           lisatiedot: this.state.lisatiedot,
+          esitietolomake: this.state.esitietolomake,
           laakari: null
         }
       });
@@ -125,7 +141,7 @@ class CreateEntry extends Component {
           />
         </FormGroup>
         <FormGroup validationState={this.state.hetuValid}>
-          <ControlLabel>Sosiaaliturvatunnus</ControlLabel>
+          <ControlLabel>Henkilötunnus</ControlLabel>
           <FormControl
             type="text"
             placeholder="000000-0000"
@@ -159,18 +175,6 @@ class CreateEntry extends Component {
           />
           {false && <HelpBlock>Syötä tähän tutkimusmuoto</HelpBlock>}
         </FormGroup>
-        <FormGroup>
-          <ControlLabel>Lisätiedot</ControlLabel>
-          <FormControl
-            componentClass="textarea"
-            placeholder="Tähän mahdolliset lisätiedot"
-            value={this.state.lisatiedot}
-            onChange={e => {
-              this.setState({ lisatiedot: e.target.value });
-            }}
-          />
-          {false && <HelpBlock>Syötä tähän henkilön sukunimi</HelpBlock>}
-        </FormGroup>
         <FormGroup validationState={this.state.vastaanottoPaivaValid}>
           <ControlLabel>Vastaanottopäivä</ControlLabel>
           <FormControl
@@ -183,6 +187,55 @@ class CreateEntry extends Component {
               });
             }}
           />
+        </FormGroup>
+        <Panel expanded={this.state.esitietolomakeExpanded}>
+          <Panel.Heading>
+            <ButtonToolbar>
+              <ToggleButtonGroup
+                type="radio"
+                name="options"
+                defaultValue={1}
+                onChange={() =>
+                  this.setState({
+                    esitietolomakeExpanded: !this.state.esitietolomakeExpanded
+                  })
+                }
+              >
+                <ToggleButton value={1}>
+                  Esitietolomaketta ei ole täytetty
+                </ToggleButton>
+                <ToggleButton value={2}>
+                  Esitietolomake on täytetty
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </ButtonToolbar>
+          </Panel.Heading>
+          <Panel.Collapse>
+            <Panel.Body>
+              <FormGroup validationState={this.state.esitietolomakeValid}>
+                <ControlLabel>Esitietolomake</ControlLabel>
+                <FormControl
+                  type="text"
+                  placeholder="Esitietolomakkeen tiedostonimi"
+                  value={this.state.esitietolomake}
+                  onChange={this.handleEsitietolomake}
+                />
+                {false && <HelpBlock>Syötä tähän henkilön sukunimi</HelpBlock>}
+              </FormGroup>
+            </Panel.Body>
+          </Panel.Collapse>
+        </Panel>
+        <FormGroup>
+          <ControlLabel>Lisätiedot</ControlLabel>
+          <FormControl
+            componentClass="textarea"
+            placeholder="Tähän mahdolliset lisätiedot"
+            value={this.state.lisatiedot}
+            onChange={e => {
+              this.setState({ lisatiedot: e.target.value });
+            }}
+          />
+          {false && <HelpBlock>Syötä tähän henkilön sukunimi</HelpBlock>}
         </FormGroup>
         <Button bsStyle="primary" onClick={this.handleClick}>
           Talleta
