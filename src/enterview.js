@@ -19,10 +19,12 @@ import { connect } from "react-redux";
 import CreateEntry from "./panels/createentry";
 
 const Entries = props => {
+  console.log(props);
   return (
     <Table striped bordered condensed hover>
       <thead>
         <tr>
+          {props.showDoctor && <th>Lääkäri</th>}
           <th>Vastaanottopäivä</th>
           <th>Sosiaaliturvatunnus</th>
           <th>Sukunimi</th>
@@ -32,8 +34,10 @@ const Entries = props => {
       </thead>
       <tbody>
         {props.tasks.map(function(task) {
+          const laakari = task.laakari == null ? "" : task.laakari.email;
           return (
             <tr key={task.taskId}>
+              {props.showDoctor && <td>{laakari}</td>}
               <td>{task.vastaanottoPaiva}</td>
               <td>{task.sotu}</td>
               <td>{task.sukunimi}</td>
@@ -99,7 +103,7 @@ class EnterView extends Component {
             </Panel.Heading>
             <Panel.Collapse>
               <Panel.Body>
-                <Entries tasks={this.props.assignedTasks} />
+                <Entries tasks={this.props.assignedTasks} showDoctor={true} />
               </Panel.Body>
             </Panel.Collapse>
           </Panel>

@@ -12,7 +12,7 @@ class DoctorView extends Component {
         <Panel bsStyle="primary" defaultExpanded>
           <Panel.Heading>
             <Panel.Title toggle componentClass="h3">
-              Keskeneräiset Lähetteet
+              Omat keskeneräiset lausuttavat
             </Panel.Title>
           </Panel.Heading>
           <Panel.Collapse>
@@ -24,7 +24,7 @@ class DoctorView extends Component {
         <Panel defaultExpanded>
           <Panel.Heading>
             <Panel.Title toggle componentClass="h3">
-              Uudet Lähetteet
+              Uudet lausuttavat
             </Panel.Title>
           </Panel.Heading>
           <Panel.Collapse>

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Button, Table } from "react-bootstrap";
 import ActionButton from "./actionbutton";
 import { finishTask } from "../actions";
+import { unassignTask } from "../actions";
 
 class InProgressEntries extends Component {
   constructor(props) {
@@ -21,15 +22,19 @@ class InProgressEntries extends Component {
             <thead>
               <tr>
                 <th />
-                <th>Vastaanottopäivä</th>
-                <th>Sosiaaliturvatunnus</th>
-                <th>Sukunimi</th>
+                <th>Potilaan vastaanottopäivä</th>
                 <th>Tutkimus</th>
-                <th>Lisätiedot</th>
+                <th>Esitietolomake</th>
+                <th>Potilaan syntymäaika</th>
+                <th>Sukunimi</th>
+                <th>Tutkimuksesta lisätiedot</th>
+                <th />
               </tr>
             </thead>
             <tbody>
               {this.props.assignedTasks.map(function(task) {
+                const syntymaaika =
+                  task.sotu == null ? "" : task.sotu.slice(0, 6);
                 return (
                   <tr key={task.taskId}>
                     <td>
@@ -40,10 +45,18 @@ class InProgressEntries extends Component {
                       />
                     </td>
                     <td>{task.vastaanottoPaiva}</td>
-                    <td>{task.sotu}</td>
-                    <td>{task.sukunimi}</td>
                     <td>{task.tutkimus}</td>
+                    <td>{task.esitietolomake}</td>
+                    <td>{syntymaaika}</td>
+                    <td>{task.sukunimi}</td>
                     <td>{task.lisatiedot}</td>
+                    <td>
+                      <ActionButton
+                        task={task}
+                        createAction={unassignTask}
+                        text="Vapauta"
+                      />
+                    </td>
                   </tr>
                 );
               })}

@@ -2,7 +2,7 @@ import { uniqueId } from "../actions";
 
 const person = {
   personId: 1,
-  email: "admin",
+  email: "Ylläpitäjä",
   role: "ADMIN"
 };
 
@@ -77,7 +77,7 @@ const newTasks = [
     tutkimus: "Kolmastyyppi",
     tutkimusPaiva: "26.9.2018",
     vastaanottoPaiva: "5.10.2018",
-    lisatiedot: "",
+    lisatiedot: "pituus 162cm, paino 82kg",
     laakari: null
   },
   {
@@ -87,7 +87,7 @@ const newTasks = [
     tutkimus: "neljäs tyypi",
     tutkimusPaiva: "27.9.2018",
     vastaanottoPaiva: null,
-    lisatiedot: "Karkasi kesken tutkimuksen tupakalle.",
+    lisatiedot: "keskeytetty 9min aikaisemmin",
     laakari: null
   }
 ];
@@ -108,8 +108,8 @@ export default function poriState(
     console.log("reducers CREATE_TASK");
     console.log(state);
     console.log(action.payload);
-    var task = Object.assign({}, action.payload.Task, { taskId: uniqueId() });
-    var nt = Object.assign([], state.newTasks);
+    let task = Object.assign({}, action.payload.Task, { taskId: uniqueId() });
+    let nt = Object.assign([], state.newTasks);
     nt.push(task);
     return {
       assignedTasks: state.assignedTasks,
@@ -120,22 +120,40 @@ export default function poriState(
     console.log("reducers ASSIGN_TASK");
     console.log(state);
     console.log(action.payload);
-    var nt = [];
+    let nt = [];
     for (const entry of state.newTasks.values()) {
       if (entry.taskId != action.payload.Task.taskId) {
         nt.push(entry);
       }
     }
-    var t = Object.assign({}, action.payload.Task, { person: state.person });
-    var assigned = Object.assign([], state.assignedTasks);
+    let t = Object.assign({}, action.payload.Task, { laakari: state.person });
+    let assigned = Object.assign([], state.assignedTasks);
     assigned.push(t);
     console.log(nt);
     return { newTasks: nt, assignedTasks: assigned, person: state.person };
+  } else if (action.type === "UNASSIGN_TASK") {
+    console.log("reducers UNASSIGN_TASK");
+    console.log(state);
+    console.log(action.payload);
+    let nt = Object.assign([], state.newTasks);
+    let task = Object.assign({}, action.payload.Task, { laakari: null });
+    nt.push(task);
+    let at = [];
+    for (const entry of state.assignedTasks.values()) {
+      if (entry.taskId != action.payload.Task.taskId) {
+        at.push(entry);
+      }
+    }
+    return {
+      newTasks: nt,
+      assignedTasks: at,
+      person: state.person
+    };
   } else if (action.type === "FINISH_TASK") {
     console.log("reducers FINISH_TASK");
     console.log(state);
     console.log(action.payload);
-    var at = [];
+    let at = [];
     for (const entry of state.assignedTasks.values()) {
       if (entry.taskId != action.payload.Task.taskId) {
         at.push(entry);
