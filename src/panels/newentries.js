@@ -33,7 +33,7 @@ class NewEntries extends Component {
             <tbody>
               {this.props.newTasks.map(function(task) {
                 const syntymaaika =
-                  task.sotu == null ? "" : task.sotu.slice(0, 6);
+                  task.hetu == null ? "" : task.hetu.slice(0, 6);
                 return (
                   <tr key={task.taskId}>
                     <td>

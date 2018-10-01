@@ -18,30 +18,63 @@ import { connect } from "react-redux";
 
 import CreateEntry from "./panels/createentry";
 
+const IPEntries = props => {
+  return (
+    <Table striped bordered condensed hover>
+      <thead>
+        <tr>
+          <th>Lääkäri</th>
+          <th>Tutkimus</th>
+          <th>Potilaan vast.otto</th>
+          <th>Syntymäaika</th>
+          <th>Sukunimi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {props.tasks.map(function(task) {
+          const laakari = task.laakari == null ? "" : task.laakari.email;
+          const syntymaaika = task.hetu == null ? "" : task.hetu.slice(0, 6);
+          return (
+            <tr key={task.taskId}>
+              <td>{laakari}</td>
+              <td>{task.tutkimus}</td>
+              <td>{task.vastaanottoPaiva}</td>
+              <td>{syntymaaika}</td>
+              <td>{task.sukunimi}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </Table>
+  );
+};
+
 const Entries = props => {
   console.log(props);
   return (
     <Table striped bordered condensed hover>
       <thead>
         <tr>
-          {props.showDoctor && <th>Lääkäri</th>}
-          <th>Vastaanottopäivä</th>
-          <th>Sosiaaliturvatunnus</th>
-          <th>Sukunimi</th>
+          <th>Tutkimuspäivä</th>
           <th>Tutkimus</th>
+          <th>Syntymäaika</th>
+          <th>Potilaan sukunimi</th>
+          <th>Potilaan vastaanotto</th>
+          <th>Esitietolomake</th>
           <th>Lisätiedot</th>
         </tr>
       </thead>
       <tbody>
         {props.tasks.map(function(task) {
-          const laakari = task.laakari == null ? "" : task.laakari.email;
+          const syntymaaika = task.hetu == null ? "" : task.hetu.slice(0, 6);
           return (
             <tr key={task.taskId}>
-              {props.showDoctor && <td>{laakari}</td>}
-              <td>{task.vastaanottoPaiva}</td>
-              <td>{task.sotu}</td>
-              <td>{task.sukunimi}</td>
+              <td>{task.tutkimusPaiva}</td>
               <td>{task.tutkimus}</td>
+              <td>{syntymaaika}</td>
+              <td>{task.sukunimi}</td>
+              <td>{task.vastaanottoPaiva}</td>
+              <td>{task.esitietolomake}</td>
               <td>{task.lisatiedot}</td>
             </tr>
           );
@@ -71,7 +104,7 @@ class EnterView extends Component {
         <Panel bsStyle="primary" defaultExpanded>
           <Panel.Heading>
             <Panel.Title toggle componentClass="h3">
-              Lähetteen syöttö
+              Syötä lausuttavan tiedot
             </Panel.Title>
           </Panel.Heading>
           <Panel.Collapse>
@@ -84,7 +117,7 @@ class EnterView extends Component {
           <Panel defaultExpanded>
             <Panel.Heading>
               <Panel.Title toggle componentClass="h3">
-                Uudet Lähetteet
+                Uudet lausuttavat
               </Panel.Title>
             </Panel.Heading>
             <Panel.Collapse>
@@ -98,12 +131,12 @@ class EnterView extends Component {
           <Panel defaultExpanded>
             <Panel.Heading>
               <Panel.Title toggle componentClass="h3">
-                Keskeneräiset Lähetteet
+                Keskeneräiset lausuttavat
               </Panel.Title>
             </Panel.Heading>
             <Panel.Collapse>
               <Panel.Body>
-                <Entries tasks={this.props.assignedTasks} showDoctor={true} />
+                <IPEntries tasks={this.props.assignedTasks} showDoctor={true} />
               </Panel.Body>
             </Panel.Collapse>
           </Panel>

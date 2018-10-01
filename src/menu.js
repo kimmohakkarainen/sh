@@ -8,7 +8,9 @@ class Menu extends React.Component {
       <Navbar collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/">SOVELLUS</a>
+            <a href="/">
+              Tiedot<sup>2</sup>
+            </a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
@@ -16,7 +18,7 @@ class Menu extends React.Component {
           <Nav>
             <IndexLinkContainer to="/">
               <NavItem eventKey={2} href="/">
-                Lähetteet
+                Lausuttavat
               </NavItem>
             </IndexLinkContainer>
             <IndexLinkContainer to="/doctor">

@@ -25,15 +25,15 @@ class CreateEntry extends Component {
     super(props);
     this.state = this.clearValues();
     this.handleClick = this.handleClick.bind(this);
-    this.handleSotu = this.handleSotu.bind(this);
+    this.handleHetu = this.handleHetu.bind(this);
     this.handleSukunimi = this.handleSukunimi.bind(this);
   }
 
   clearValues() {
     return {
       validation: false,
-      sotu: "",
-      sotuValid: null,
+      hetu: "",
+      hetuValid: null,
       sukunimi: "",
       sukunimiValid: null,
       tutkimus: "",
@@ -46,13 +46,13 @@ class CreateEntry extends Component {
     };
   }
 
-  handleSotu(v) {
+  handleHetu(v) {
     const value = v.target.value;
     const valid = value.length === 11 ? "success" : "error";
     console.log(valid);
     this.setState({
-      sotu: value,
-      sotuValid: valid
+      hetu: value,
+      hetuValid: valid
     });
   }
 
@@ -69,7 +69,7 @@ class CreateEntry extends Component {
   handleClick() {
     console.log(this.state);
     this.setState({
-      sotuValid: this.state.sotuValid == null ? "error" : this.state.sotuValid,
+      hetuValid: this.state.hetuValid == null ? "error" : this.state.hetuValid,
       sukunimiValid:
         this.state.sukunimiValid == null ? "error" : this.state.sukunimiValid,
       tutkimusValid:
@@ -84,7 +84,7 @@ class CreateEntry extends Component {
           : this.state.vastaanottoPaivaValid
     });
     if (
-      this.state.sotuValid === "success" &&
+      this.state.hetuValid === "success" &&
       this.state.sukunimiValid === "success" &&
       this.state.tutkimusValid === "success" &&
       this.state.tutkimusPaivaValid === "success" &&
@@ -94,7 +94,7 @@ class CreateEntry extends Component {
         Person: this.props.person,
         Task: {
           taskId: null,
-          sotu: this.state.sotu,
+          hetu: this.state.hetu,
           sukunimi: this.state.sukunimi,
           tutkimus: this.state.tutkimus,
           tutkimusPaiva: this.state.tutkimusPaiva,
@@ -111,13 +111,26 @@ class CreateEntry extends Component {
   render() {
     return (
       <div>
-        <FormGroup validationState={this.state.sotuValid}>
+        <FormGroup validationState={this.state.tutkimusPaivaValid}>
+          <ControlLabel>Tutkimuspäivä</ControlLabel>
+          <FormControl
+            type="date"
+            value={this.state.tutkimusPaiva}
+            onChange={e => {
+              this.setState({
+                tutkimusPaiva: e.target.value,
+                tutkimusPaivaValid: "success"
+              });
+            }}
+          />
+        </FormGroup>
+        <FormGroup validationState={this.state.hetuValid}>
           <ControlLabel>Sosiaaliturvatunnus</ControlLabel>
           <FormControl
             type="text"
             placeholder="000000-0000"
-            value={this.state.sotu}
-            onChange={this.handleSotu}
+            value={this.state.hetu}
+            onChange={this.handleHetu}
           />
           {false && (
             <HelpBlock>Syötä tähän henkilön sosiaaliturvatunnus</HelpBlock>
@@ -145,19 +158,6 @@ class CreateEntry extends Component {
             }}
           />
           {false && <HelpBlock>Syötä tähän tutkimusmuoto</HelpBlock>}
-        </FormGroup>
-        <FormGroup validationState={this.state.tutkimusPaivaValid}>
-          <ControlLabel>Tutkimuspäivä</ControlLabel>
-          <FormControl
-            type="date"
-            value={this.state.tutkimusPaiva}
-            onChange={e => {
-              this.setState({
-                tutkimusPaiva: e.target.value,
-                tutkimusPaivaValid: "success"
-              });
-            }}
-          />
         </FormGroup>
         <FormGroup>
           <ControlLabel>Lisätiedot</ControlLabel>

@@ -9,52 +9,54 @@ const person = {
 const assignedTasks = [
   {
     taskId: uniqueId(),
-    sotu: "123456-7890",
+    hetu: "123456-7890",
     sukunimi: "Stubb",
-    tutkimus: "Tutkimustyyppi",
+    tutkimus: "Keuhkoventilaatio / perfuusio",
     tutkimusPaiva: "18.9.2018",
     vastaanottoPaiva: null,
     lisatiedot: "",
-    laakari: null
+    laakari: { email: "Nikula" }
   },
   {
     taskId: uniqueId(),
-    sotu: "234567-890A",
+    hetu: "234567-890A",
     sukunimi: "Selin",
-    tutkimus: "ToinenTyyppi",
+    tutkimus: "EKG 24 h",
     tutkimusPaiva: "22.9.2018",
     vastaanottoPaiva: null,
     lisatiedot: "Jalka poikki. Liikkui vaikeasti ja tarvitsi tukea.",
-    laakari: null
+    laakari: { email: "Romppanen" }
   },
   {
     taskId: uniqueId(),
-    sotu: "345678-9012",
+    hetu: "345678-9012",
     sukunimi: "Andersson",
-    tutkimus: "Kolmastyyppi",
+    tutkimus:
+      "Kilpirauhassyövän metastaasien gammakuvaus(koko keho ja SPECT / CT)",
     tutkimusPaiva: "26.9.2018",
     vastaanottoPaiva: "5.10.2018",
     lisatiedot: "",
-    laakari: null
+    laakari: { email: "Airisto" }
   },
   {
     taskId: uniqueId(),
-    sotu: "456789-012T",
+    hetu: "456789-012T",
     sukunimi: "Lepomäki",
-    tutkimus: "neljäs tyypi",
+    tutkimus: "EKG 24 h",
     tutkimusPaiva: "27.9.2018",
     vastaanottoPaiva: null,
     lisatiedot: "Karkasi kesken tutkimuksen tupakalle.",
-    laakari: null
+    laakari: { email: "Nikula" }
   }
 ];
 
 const newTasks = [
   {
     taskId: uniqueId(),
-    sotu: "123456-7890",
+    hetu: "123456-7890",
     sukunimi: "Vanhanen",
-    tutkimus: "Tutkimustyyppi",
+    tutkimus:
+      "Kilpirauhassyövän metastaasien gammakuvaus(koko keho ja SPECT / CT)",
     tutkimusPaiva: "18.9.2018",
     vastaanottoPaiva: null,
     lisatiedot: "",
@@ -62,9 +64,9 @@ const newTasks = [
   },
   {
     taskId: uniqueId(),
-    sotu: "234567-890A",
+    hetu: "234567-890A",
     sukunimi: "Niinistö",
-    tutkimus: "ToinenTyyppi",
+    tutkimus: "EKG 24 h",
     tutkimusPaiva: "22.9.2018",
     vastaanottoPaiva: null,
     lisatiedot: "Jalka poikki. Liikkui vaikeasti ja tarvitsi tukea.",
@@ -72,9 +74,9 @@ const newTasks = [
   },
   {
     taskId: uniqueId(),
-    sotu: "345678-9012",
+    hetu: "345678-9012",
     sukunimi: "Soini",
-    tutkimus: "Kolmastyyppi",
+    tutkimus: "Keuhkoventilaatio / perfuusio",
     tutkimusPaiva: "26.9.2018",
     vastaanottoPaiva: "5.10.2018",
     lisatiedot: "pituus 162cm, paino 82kg",
@@ -82,9 +84,9 @@ const newTasks = [
   },
   {
     taskId: uniqueId(),
-    sotu: "456789-012T",
+    hetu: "456789-012T",
     sukunimi: "Sipilä",
-    tutkimus: "neljäs tyypi",
+    tutkimus: "EKG 24 h",
     tutkimusPaiva: "27.9.2018",
     vastaanottoPaiva: null,
     lisatiedot: "keskeytetty 9min aikaisemmin",

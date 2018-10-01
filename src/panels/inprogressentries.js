@@ -34,7 +34,7 @@ class InProgressEntries extends Component {
             <tbody>
               {this.props.assignedTasks.map(function(task) {
                 const syntymaaika =
-                  task.sotu == null ? "" : task.sotu.slice(0, 6);
+                  task.hetu == null ? "" : task.hetu.slice(0, 6);
                 return (
                   <tr key={task.taskId}>
                     <td>
