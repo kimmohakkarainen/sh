@@ -92,17 +92,17 @@ class CreateEntry extends Component {
         this.state.sukunimiValid == null ? "error" : this.state.sukunimiValid,
       tutkimusValid:
         this.state.tutkimusValid == null ? "error" : this.state.tutkimusValid,
-      tutkimusPaivaValid:
-        this.state.tutkimusPaivaValid == null
+      tutkimusPaivaValid: this.state.esitietolomakeExpanded
+        ? this.state.tutkimusPaivaValid == null
           ? "error"
           : this.state.tutkimusPaivaValid
+        : "success"
     });
     if (
       this.state.hetuValid === "success" &&
       this.state.sukunimiValid === "success" &&
       this.state.tutkimusValid === "success" &&
       this.state.tutkimusPaivaValid === "success" &&
-      this.state.vastaanottoPaivaValid === "success" &&
       this.state.esitietolomakeValid === "success"
     ) {
       const parms = createTask({
