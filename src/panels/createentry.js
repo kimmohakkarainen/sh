@@ -32,6 +32,9 @@ class CreateEntry extends Component {
     this.handleHetu = this.handleHetu.bind(this);
     this.handleSukunimi = this.handleSukunimi.bind(this);
     this.handleEsitietolomake = this.handleEsitietolomake.bind(this);
+    this.handleEsitietolomakeToggle = this.handleEsitietolomakeToggle.bind(
+      this
+    );
   }
 
   clearValues() {
@@ -84,26 +87,41 @@ class CreateEntry extends Component {
     });
   }
 
+  handleEsitietolomakeToggle() {
+    const expanded = !this.state.esitietolomakeExpanded;
+    const valid = expanded ? null : true;
+
+    this.setState({
+      esitietolomakeExpanded: expanded,
+      esitietolomaValid: valid,
+      esitietolomake: ""
+    });
+  }
+
   handleClick() {
     console.log(this.state);
-    this.setState({
-      hetuValid: this.state.hetuValid == null ? "error" : this.state.hetuValid,
-      sukunimiValid:
-        this.state.sukunimiValid == null ? "error" : this.state.sukunimiValid,
-      tutkimusValid:
-        this.state.tutkimusValid == null ? "error" : this.state.tutkimusValid,
-      tutkimusPaivaValid: this.state.esitietolomakeExpanded
-        ? this.state.tutkimusPaivaValid == null
-          ? "error"
-          : this.state.tutkimusPaivaValid
-        : "success"
-    });
+    const tutkimusPaivaValid =
+      this.state.tutkimusPaivaValid == null
+        ? "error"
+        : this.state.tutkimusPaivaValid;
+    const hetuValid =
+      this.state.hetuValid == null ? "error" : this.state.hetuValid;
+    const sukunimiValid =
+      this.state.sukunimiValid == null ? "error" : this.state.sukunimiValid;
+    const tutkimusValid =
+      this.state.tutkimusValid == null ? "error" : this.state.tutkimusValid;
+    const esitietolomakeValid = this.state.esitietolomakeExpanded
+      ? this.state.esitietolomakeValid == null
+        ? "error"
+        : this.state.esitietolomakeValid
+      : "success";
+
     if (
-      this.state.hetuValid === "success" &&
-      this.state.sukunimiValid === "success" &&
-      this.state.tutkimusValid === "success" &&
-      this.state.tutkimusPaivaValid === "success" &&
-      this.state.esitietolomakeValid === "success"
+      tutkimusPaivaValid === "success" &&
+      hetuValid === "success" &&
+      sukunimiValid === "success" &&
+      tutkimusValid === "success" &&
+      esitietolomakeValid === "success"
     ) {
       const parms = createTask({
         Person: this.props.person,
@@ -121,6 +139,14 @@ class CreateEntry extends Component {
       });
       this.props.dispatch(parms);
       this.setState(this.clearValues());
+    } else {
+      this.setState({
+        tutkimusPaivaValid: tutkimusPaivaValid,
+        hetuValid: hetuValid,
+        sukunimiValid: sukunimiValid,
+        tutkimusValid: tutkimusValid,
+        esitietolomakeValid: esitietolomakeValid
+      });
     }
   }
 
@@ -195,11 +221,7 @@ class CreateEntry extends Component {
                 type="radio"
                 name="options"
                 defaultValue={1}
-                onChange={() =>
-                  this.setState({
-                    esitietolomakeExpanded: !this.state.esitietolomakeExpanded
-                  })
-                }
+                onChange={this.handleEsitietolomakeToggle}
               >
                 <ToggleButton value={1}>
                   Esitietolomaketta ei ole täytetty
