@@ -18,7 +18,7 @@ class InProgressEntries extends Component {
     return (
       <div>
         {this.props.assignedTasks.length > 0 && (
-          <Table striped bordered condensed hover>
+          <Table striped condensed hover>
             <thead>
               <tr>
                 <th />

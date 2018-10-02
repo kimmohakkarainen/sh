@@ -60,7 +60,6 @@ class CreateEntry extends Component {
   handleHetu(v) {
     const value = v.target.value;
     const valid = value.length === 11 ? "success" : "error";
-    console.log(valid);
     this.setState({
       hetu: value,
       hetuValid: valid
@@ -70,7 +69,6 @@ class CreateEntry extends Component {
   handleSukunimi(v) {
     const value = v.target.value;
     const valid = value.length > 3 ? "success" : "error";
-    console.log(valid);
     this.setState({
       sukunimi: value,
       sukunimiValid: valid
@@ -80,7 +78,6 @@ class CreateEntry extends Component {
   handleEsitietolomake(v) {
     const value = v.target.value;
     const valid = value.length > 3 ? "success" : "error";
-    console.log(valid);
     this.setState({
       esitietolomake: value,
       esitietolomakeValid: valid
@@ -99,7 +96,6 @@ class CreateEntry extends Component {
   }
 
   handleClick() {
-    console.log(this.state);
     const tutkimusPaivaValid =
       this.state.tutkimusPaivaValid == null
         ? "error"

@@ -17,7 +17,7 @@ class NewEntries extends Component {
     return (
       <div>
         {this.props.newTasks.length > 0 && (
-          <Table striped bordered condensed hover>
+          <Table striped condensed hover>
             <thead>
               <tr>
                 <th />
