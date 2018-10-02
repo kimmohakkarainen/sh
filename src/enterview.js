@@ -20,7 +20,7 @@ import CreateEntry from "./panels/createentry";
 
 const IPEntries = props => {
   return (
-    <Table striped bordered condensed hover>
+    <Table striped condensed hover>
       <thead>
         <tr>
           <th>Lääkäri</th>
@@ -52,7 +52,7 @@ const IPEntries = props => {
 const Entries = props => {
   console.log(props);
   return (
-    <Table striped bordered condensed hover>
+    <Table striped condensed hover>
       <thead>
         <tr>
           <th>Tutkimuspäivä</th>
