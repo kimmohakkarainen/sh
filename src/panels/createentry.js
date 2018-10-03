@@ -11,6 +11,7 @@ import {
   Grid,
   Row,
   Col,
+  Form,
   FormGroup,
   ControlLabel,
   FormControl,
@@ -88,9 +89,13 @@ class CreateEntry extends Component {
     const expanded = !this.state.esitietolomakeExpanded;
     const valid = expanded ? null : true;
 
+    console.log("handleEsitietolomakeToggle");
+    console.log(expanded);
+    console.log(valid);
+
     this.setState({
       esitietolomakeExpanded: expanded,
-      esitietolomaValid: valid,
+      esitietolomakeValid: valid,
       esitietolomake: ""
     });
   }
@@ -210,39 +215,35 @@ class CreateEntry extends Component {
             }}
           />
         </FormGroup>
-        <Panel expanded={this.state.esitietolomakeExpanded}>
-          <Panel.Heading>
-            <ButtonToolbar>
-              <ToggleButtonGroup
-                type="radio"
-                name="options"
-                defaultValue={1}
-                onChange={this.handleEsitietolomakeToggle}
-              >
-                <ToggleButton value={1}>
-                  Esitietolomaketta ei ole täytetty
-                </ToggleButton>
-                <ToggleButton value={2}>
-                  Esitietolomake on täytetty
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </ButtonToolbar>
-          </Panel.Heading>
-          <Panel.Collapse>
-            <Panel.Body>
-              <FormGroup validationState={this.state.esitietolomakeValid}>
-                <ControlLabel>Esitietolomake</ControlLabel>
-                <FormControl
-                  type="text"
-                  placeholder="Esitietolomakkeen tiedostonimi"
-                  value={this.state.esitietolomake}
-                  onChange={this.handleEsitietolomake}
-                />
-                {false && <HelpBlock>Syötä tähän henkilön sukunimi</HelpBlock>}
-              </FormGroup>
-            </Panel.Body>
-          </Panel.Collapse>
-        </Panel>
+        <FormGroup>
+          <ButtonToolbar>
+            <ToggleButtonGroup
+              type="radio"
+              name="options"
+              defaultValue={1}
+              onChange={this.handleEsitietolomakeToggle}
+            >
+              <ToggleButton value={1}>
+                Esitietolomaketta ei ole täytetty
+              </ToggleButton>
+              <ToggleButton value={2}>Esitietolomake on täytetty</ToggleButton>
+            </ToggleButtonGroup>
+          </ButtonToolbar>
+        </FormGroup>
+        {this.state.esitietolomakeExpanded && (
+          <FormGroup validationState={this.state.esitietolomakeValid}>
+            <ControlLabel>Esitietolomakkeen tiedostonimi</ControlLabel>
+            <FormControl
+              type="text"
+              placeholder="Esitietolomakkeen tiedostonimi"
+              value={this.state.esitietolomake}
+              onChange={this.handleEsitietolomake}
+            />
+            {false && (
+              <HelpBlock>Syötä esitietolomakkeen tiedostonimi</HelpBlock>
+            )}
+          </FormGroup>
+        )}
         <FormGroup>
           <ControlLabel>Lisätiedot</ControlLabel>
           <FormControl
