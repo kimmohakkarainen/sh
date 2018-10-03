@@ -50,7 +50,6 @@ const IPEntries = props => {
 };
 
 const Entries = props => {
-  console.log(props);
   return (
     <Table striped condensed hover>
       <thead>

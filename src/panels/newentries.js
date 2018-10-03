@@ -12,8 +12,6 @@ class NewEntries extends Component {
   }
 
   render() {
-    console.log(this.props);
-
     return (
       <div>
         {this.props.newTasks.length > 0 && (

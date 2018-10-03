@@ -12,7 +12,6 @@ class ActionButton extends Component {
   }
 
   handleClick() {
-    console.log(this.props);
     const parms = this.props.createAction({
       Person: this.props.person,
       Task: this.props.task

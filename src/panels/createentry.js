@@ -89,10 +89,6 @@ class CreateEntry extends Component {
     const expanded = !this.state.esitietolomakeExpanded;
     const valid = expanded ? null : true;
 
-    console.log("handleEsitietolomakeToggle");
-    console.log(expanded);
-    console.log(valid);
-
     this.setState({
       esitietolomakeExpanded: expanded,
       esitietolomakeValid: valid,
