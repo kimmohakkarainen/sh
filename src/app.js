@@ -9,27 +9,33 @@ import { fetchState } from "./actions";
 import DummyView from "./dummyview";
 import EnterView from "./enterview";
 import DoctorView from "./doctorview";
+import LoginView from "./loginview";
 
 class App extends Component {
   componentDidMount() {
+    /*
     this.props.dispatch(fetchState());
+    */
   }
 
   render() {
     return (
       <div className="App">
-        <Router>
-          <div>
-            <Menu personName="Matti Meikäläinen" privileged={true} />
-            <Route exact path="/" component={EnterView} />
-            <Route exact path="/doctor" component={DoctorView} />
-            <Route exact path="/billing" component={DummyView} />
-            <Route exact path="/admin/rights" component={DummyView} />
-            <Route exact path="/admin/reports" component={DummyView} />
-            <Route exact path="/password" component={DummyView} />
-            <Route exact path="/logout" component={DummyView} />
-          </div>
-        </Router>
+        {!this.props.person && <LoginView />}
+        {this.props.person && (
+          <Router>
+            <div>
+              <Menu personName={this.props.person.email} privileged={true} />
+              <Route exact path="/" component={EnterView} />
+              <Route exact path="/doctor" component={DoctorView} />
+              <Route exact path="/billing" component={DummyView} />
+              <Route exact path="/admin/rights" component={DummyView} />
+              <Route exact path="/admin/reports" component={DummyView} />
+              <Route exact path="/password" component={DummyView} />
+              <Route exact path="/logout" component={DummyView} />
+            </div>
+          </Router>
+        )}
       </div>
     );
   }
