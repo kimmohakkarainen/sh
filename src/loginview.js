@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FormGroup, ControlLabel, FormControl, Button } from "react-bootstrap";
 import { connect } from "react-redux";
-import { fetchState } from "./actions";
+import { postLogin, fetchState } from "./actions";
 
 class LoginView extends Component {
   constructor(props) {
@@ -14,7 +14,12 @@ class LoginView extends Component {
   }
 
   login() {
-    this.props.dispatch(fetchState());
+    const params = {
+      username: this.state.username,
+      password: this.state.password
+    };
+    this.props.dispatch(postLogin(params));
+    /* this.props.dispatch(fetchState()); */
   }
 
   render() {

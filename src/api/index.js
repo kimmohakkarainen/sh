@@ -9,6 +9,14 @@ const client = axios.create({
   }
 });
 
+export function postLogin(params) {
+  let prms = new URLSearchParams();
+  prms.append("username", params.username);
+  prms.append("password", params.password);
+
+  return client.post("/login", prms);
+}
+
 export function fetchState() {
   return client.get("/rest/state/1");
 }

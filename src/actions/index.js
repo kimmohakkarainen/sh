@@ -1,4 +1,5 @@
 export {
+  postLogin,
   fetchState,
   fetchStateSucceeded,
   postCreate,

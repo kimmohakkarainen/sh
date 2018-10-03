@@ -8,6 +8,14 @@ export function fetchState() {
   };
 }
 
+export function postLogin(params) {
+  return dispatch => {
+    api.postLogin(params).then(resp => {
+      dispatch(fetchStateSucceeded(resp.data));
+    });
+  };
+}
+
 export function postCreate({ Person, Task }) {
   const params = Object.assign({}, Task, { personId: Person.personId });
   return dispatch => {
