@@ -3,11 +3,18 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Menu from "./menu";
 
+import { connect } from "react-redux";
+import { fetchState } from "./actions";
+
 import DummyView from "./dummyview";
 import EnterView from "./enterview";
 import DoctorView from "./doctorview";
 
 class App extends Component {
+  componentDidMount() {
+    this.props.dispatch(fetchState());
+  }
+
   render() {
     return (
       <div className="App">
@@ -28,4 +35,10 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    person: state.person
+  };
+}
+
+export default connect(mapStateToProps)(App);
