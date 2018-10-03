@@ -6,6 +6,7 @@ import { Button, Table } from "react-bootstrap";
 import ActionButton from "./actionbutton";
 import { finishTask } from "../actions";
 import { unassignTask } from "../actions";
+import { postUnassign, postFinish } from "../actions";
 
 class InProgressEntries extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class InProgressEntries extends Component {
                     <td>
                       <ActionButton
                         task={task}
-                        createAction={finishTask}
+                        createAction={postFinish}
                         text="Valmis"
                       />
                     </td>
@@ -51,7 +52,7 @@ class InProgressEntries extends Component {
                     <td>
                       <ActionButton
                         task={task}
-                        createAction={unassignTask}
+                        createAction={postUnassign}
                         text="Vapauta"
                       />
                     </td>

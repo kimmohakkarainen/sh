@@ -23,7 +23,7 @@ import {
 } from "react-bootstrap";
 
 import TutkimusValinnat from "./tutkimusvalinnat";
-import { createTask } from "../actions";
+import { createTask, postCreate } from "../actions";
 
 class CreateEntry extends Component {
   constructor(props) {
@@ -120,7 +120,7 @@ class CreateEntry extends Component {
       tutkimusValid === "success" &&
       esitietolomakeValid === "success"
     ) {
-      const parms = createTask({
+      const parms = postCreate({
         Person: this.props.person,
         Task: {
           taskId: null,

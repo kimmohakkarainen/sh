@@ -14,13 +14,17 @@ export function fetchState() {
 }
 
 export function postCreateTask(params) {
-  return client.post("/rest/create/1", params);
+  return client.post("/rest/create/" + params.personId, params);
 }
 
 export function postAssignTask(params) {
-  return clieant.post("/rest/assign/1", params);
+  return client.post("/rest/assign", params);
 }
 
 export function postUnassignTask(params) {
-  return client.post("/rest/unassign/1", params);
+  return client.post("/rest/unassign", params);
+}
+
+export function postFinishTask(params) {
+  return client.post("/rest/finish", params);
 }

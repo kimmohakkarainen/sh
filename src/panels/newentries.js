@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { Button, Table } from "react-bootstrap";
 import ActionButton from "./actionbutton";
-import { assignTask } from "../actions";
+import { assignTask, postAssign } from "../actions";
 
 class NewEntries extends Component {
   constructor(props) {
@@ -37,7 +37,7 @@ class NewEntries extends Component {
                     <td>
                       <ActionButton
                         task={task}
-                        createAction={assignTask}
+                        createAction={postAssign}
                         text="Työlistalle"
                       />
                     </td>

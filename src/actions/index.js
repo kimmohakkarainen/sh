@@ -1,4 +1,11 @@
-export { fetchState, fetchStateSucceeded } from "./server";
+export {
+  fetchState,
+  fetchStateSucceeded,
+  postCreate,
+  postAssign,
+  postUnassign,
+  postFinish
+} from "./server";
 
 let _id = 1;
 export function uniqueId() {
