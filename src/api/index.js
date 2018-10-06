@@ -36,3 +36,11 @@ export function postUnassignTask(params) {
 export function postFinishTask(params) {
   return client.post("/rest/finish", params);
 }
+
+export function getUsers() {
+  return client.get("/rest/users");
+}
+
+export function postUser(params) {
+  return client.post("/rest/user", params);
+}

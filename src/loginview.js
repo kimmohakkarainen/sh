@@ -18,8 +18,8 @@ class LoginView extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    this.props.dispatch(postLogin(params));
-    /* this.props.dispatch(fetchState()); */
+    /*this.props.dispatch(postLogin(params)); */
+    this.props.dispatch(fetchState());
   }
 
   render() {
