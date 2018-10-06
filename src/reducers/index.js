@@ -10,10 +10,6 @@ export default function poriState(
   },
   action
 ) {
-  console.log(action.type);
-  console.log(state);
-  console.log(action.payload);
-
   if (action.type === "FETCH_STATE_SUCCEEDED") {
     return {
       person: action.payload.person,
@@ -24,7 +20,6 @@ export default function poriState(
     };
   } else if (action.type === "FETCH_USERS_SUCCEEDED") {
     const newstate = Object.assign({}, state, action.payload);
-    console.log(newstate);
     return newstate;
   }
 

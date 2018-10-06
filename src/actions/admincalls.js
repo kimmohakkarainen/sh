@@ -9,8 +9,9 @@ export function getUsers({ Person }) {
 }
 
 export function modifyUser({ Person }) {
+  console.log(Person);
   return dispatch => {
-    api.modifyUser(Person).then(resp => {
+    api.postUser(Person).then(resp => {
       dispatch(fetchUsersSucceeded(resp.data));
     });
   };
