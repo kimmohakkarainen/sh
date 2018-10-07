@@ -15,22 +15,32 @@ import {
   Table
 } from "react-bootstrap";
 import { connect } from "react-redux";
-import { getUsers } from "./actions";
+import { getUsers, modifyUser } from "./actions";
 import PersonTable from "./panels/persontable";
 
 class PersonAdminView extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      modify: false,
-      personId: 0,
-      email: null,
-      role: null
-    };
+    this.handleTallenna = this.handleTallenna.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(getUsers(this.props.person));
+  }
+
+  handleTallenna(e) {
+    console.log("PersonAdminView.handleTallenna");
+    console.log(e);
+    const person = {
+      Person: {
+        personId: e.personId,
+        email: e.email,
+        role: e.role
+      }
+    };
+    console.log(person);
+
+    this.props.dispatch(modifyUser(person));
   }
 
   render() {
@@ -42,7 +52,10 @@ class PersonAdminView extends Component {
           </Panel.Title>
         </Panel.Heading>
         <Panel.Body>
-          <PersonTable users={this.props.users} />
+          <PersonTable
+            users={this.props.users}
+            onTallenna={this.handleTallenna}
+          />
         </Panel.Body>
       </Panel>
     );
