@@ -18,14 +18,14 @@ class NewPersonRow extends Component {
   }
 
   handleTallenna(e) {
-    console.log("NewPersonRow.handleTallenna");
-    console.log(this.props);
+    /* console.log("NewPersonRow.handleTallenna");
+    console.log(this.props); */
     this.props.onTallenna(this.state);
   }
 
   handlePeruuta(e) {
-    console.log("NewPersonRow.handlePeruuta");
-    console.log(this.props);
+    /* console.log("NewPersonRow.handlePeruuta");
+    console.log(this.props); */
     this.props.onPeruuta(this.state);
   }
 
@@ -78,8 +78,8 @@ class PersonRow extends Component {
   }
 
   handleMuokkaa(e) {
-    console.log("PersonRow.handleMuokkaa");
-    console.log(this.props);
+    /* console.log("PersonRow.handleMuokkaa");
+    console.log(this.props); */
     this.props.onMuokkaa(this.props.user);
     this.setState({
       editing: true,
@@ -90,8 +90,8 @@ class PersonRow extends Component {
   }
 
   handleTallenna(e) {
-    console.log("PersonRow.handleTallenna");
-    console.log(this.props);
+    /* console.log("PersonRow.handleTallenna");
+    console.log(this.props); */
     this.props.onTallenna(this.state);
     this.setState({
       editing: false
@@ -99,8 +99,8 @@ class PersonRow extends Component {
   }
 
   handlePeruuta(e) {
-    console.log("PersonRow.handlePeruuta");
-    console.log(this.props);
+    /* console.log("PersonRow.handlePeruuta");
+    console.log(this.props); */
     this.props.onPeruuta(this.state);
     this.setState({
       editing: false
@@ -172,8 +172,8 @@ class PersonTable extends Component {
   }
 
   handleMuokkaa(e) {
-    console.log("PersonTable.handleMuokkaa");
-    console.log(e);
+    /*console.log("PersonTable.handleMuokkaa");
+    console.log(e); */
 
     this.setState({
       editing: true
@@ -181,7 +181,7 @@ class PersonTable extends Component {
   }
 
   handleMuokkaaUusi(e) {
-    console.log("PersonTable.handleMuokkaaUusi");
+    /* console.log("PersonTable.handleMuokkaaUusi"); */
 
     this.setState({
       editing: true,
@@ -194,8 +194,8 @@ class PersonTable extends Component {
   }
 
   handlePeruuta(e) {
-    console.log("PersonTable.handlePeruuta");
-    console.log(e);
+    /* console.log("PersonTable.handlePeruuta");
+    console.log(e); */
     this.setState({
       editing: false,
       newUser: null
@@ -203,8 +203,8 @@ class PersonTable extends Component {
   }
 
   handleTallenna(e) {
-    console.log("PersonTable.handleTallenna");
-    console.log(e);
+    /*console.log("PersonTable.handleTallenna");
+    console.log(e); */
     this.setState({
       editing: false
     });
@@ -212,8 +212,8 @@ class PersonTable extends Component {
   }
 
   handleTallennaUusi(e) {
-    console.log("PersonTable.handleTallennaUusi");
-    console.log(e);
+    /* console.log("PersonTable.handleTallennaUusi");
+    console.log(e); */
     this.setState({
       editing: false,
       newUser: null
@@ -222,8 +222,8 @@ class PersonTable extends Component {
   }
 
   render() {
-    console.log("PersonTable.render");
-    console.log(this.props);
+    /*console.log("PersonTable.render");
+    console.log(this.props); */
     return (
       <div>
         <Table striped condensed hover>
@@ -260,7 +260,9 @@ class PersonTable extends Component {
           </tbody>
         </Table>
         {this.state.editing == false && (
-          <Button onClick={this.handleMuokkaaUusi}>Luo uusi käyttäjä</Button>
+          <Button bsStyle="primary" onClick={this.handleMuokkaaUusi}>
+            Luo uusi käyttäjä
+          </Button>
         )}
       </div>
     );

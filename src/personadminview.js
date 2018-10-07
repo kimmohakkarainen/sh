@@ -29,8 +29,6 @@ class PersonAdminView extends Component {
   }
 
   handleTallenna(e) {
-    console.log("PersonAdminView.handleTallenna");
-    console.log(e);
     const person = {
       Person: {
         personId: e.personId,
@@ -38,8 +36,6 @@ class PersonAdminView extends Component {
         role: e.role
       }
     };
-    console.log(person);
-
     this.props.dispatch(modifyUser(person));
   }
 

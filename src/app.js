@@ -10,7 +10,6 @@ import DummyView from "./dummyview";
 import EnterView from "./enterview";
 import DoctorView from "./doctorview";
 import LoginView from "./loginview";
-import AdminView from "./adminview";
 import PersonAdminView from "./personadminview";
 
 class App extends Component {
@@ -31,8 +30,8 @@ class App extends Component {
               <Route exact path="/" component={EnterView} />
               <Route exact path="/doctor" component={DoctorView} />
               <Route exact path="/billing" component={DummyView} />
-              <Route exact path="/admin/rights" component={AdminView} />
-              <Route exact path="/admin/reports" component={PersonAdminView} />
+              <Route exact path="/admin/rights" component={PersonAdminView} />
+              <Route exact path="/admin/reports" component={DummyView} />
               <Route exact path="/password" component={DummyView} />
               <Route exact path="/logout" component={DummyView} />
             </div>
