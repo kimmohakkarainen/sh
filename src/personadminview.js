@@ -14,6 +14,7 @@ import {
   HelpBlock,
   Table
 } from "react-bootstrap";
+
 import { connect } from "react-redux";
 import { getUsers, modifyUser } from "./actions";
 import PersonTable from "./panels/persontable";

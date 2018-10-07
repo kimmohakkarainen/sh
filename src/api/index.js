@@ -44,3 +44,11 @@ export function getUsers() {
 export function postUser(params) {
   return client.post("/rest/user", params);
 }
+
+export function getPreview({ Person, Filter }) {
+  const params = {
+    person: Person,
+    filter: Filter
+  };
+  return client.post("/rest/invoice", params);
+}

@@ -11,12 +11,11 @@ import EnterView from "./enterview";
 import DoctorView from "./doctorview";
 import LoginView from "./loginview";
 import PersonAdminView from "./personadminview";
+import InvoiceView from "./invoiceview";
 
 class App extends Component {
   componentDidMount() {
-    /*
     this.props.dispatch(fetchState());
-    */
   }
 
   render() {
@@ -29,7 +28,7 @@ class App extends Component {
               <Menu personName={this.props.person.email} privileged={true} />
               <Route exact path="/" component={EnterView} />
               <Route exact path="/doctor" component={DoctorView} />
-              <Route exact path="/billing" component={DummyView} />
+              <Route exact path="/billing" component={InvoiceView} />
               <Route exact path="/admin/rights" component={PersonAdminView} />
               <Route exact path="/admin/reports" component={DummyView} />
               <Route exact path="/password" component={DummyView} />
