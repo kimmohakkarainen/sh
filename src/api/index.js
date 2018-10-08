@@ -45,10 +45,23 @@ export function postUser(params) {
   return client.post("/rest/user", params);
 }
 
-export function getPreview({ Person, Filter }) {
-  const params = {
-    person: Person,
-    filter: Filter
-  };
-  return client.post("/rest/invoice", params);
+export function getPreview({
+  beginDate,
+  endDate,
+  doctorFilter,
+  examinationFilter
+}) {
+  console.log("api.getPreview");
+  console.log({
+    beginDate,
+    endDate,
+    doctorFilter,
+    examinationFilter
+  });
+  return client.post("/rest/invoice", {
+    beginDate,
+    endDate,
+    doctorFilter,
+    examinationFilter
+  });
 }

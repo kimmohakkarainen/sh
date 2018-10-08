@@ -6,7 +6,15 @@ export default function poriState(
     newTasks: [],
     assignedTasks: [],
     processedTasks: [],
-    users: []
+    users: [],
+    invoice: {
+      beginDate: null,
+      endDate: null,
+      doctorOptions: [],
+      doctorFilter: [],
+      examinationOptions: [],
+      examinationFilter: []
+    }
   },
   action
 ) {
@@ -16,12 +24,15 @@ export default function poriState(
       newTasks: action.payload.newTasks,
       assignedTasks: action.payload.assignedTasks,
       processedTasks: action.payload.processedTasks,
-      users: state.users
+      users: state.users,
+      invoice: state.invoice
     };
   } else if (action.type === "FETCH_USERS_SUCCEEDED") {
     const newstate = Object.assign({}, state, action.payload);
     return newstate;
+  } else if (action.type === "FETCH_PREVIEW_SUCCEEDED") {
+    const newstate = Object.assign({}, state, { invoice: action.payload });
+    return newstate;
   }
-
   return state;
 }

@@ -36,8 +36,8 @@ class InvoiceView extends Component {
       errorMsg: null,
       doctorFilter: [],
       doctorOptions: [
-        { value: 1, label: "Doctor Möttönen" },
-        { value: 2, label: "Doctor Nikula" }
+        { value: 1, label: "Doctor Möttönen", personId: 1 },
+        { value: 2, label: "Doctor Nikula", personId: 2 }
       ],
       examinationFilter: [],
       examinationOptions: [
@@ -46,6 +46,12 @@ class InvoiceView extends Component {
       ],
       preview: []
     };
+
+    this.handleDoctorFilterChange = this.handleDoctorFilterChange.bind(this);
+    this.handleExaminationFilterChange = this.handleExaminationFilterChange.bind(
+      this
+    );
+
     this.fetchSuccessfull = this.fetchSuccessfull.bind(this);
     this.handleResponse = this.handleResponse.bind(this);
     this.connectionError = this.connectionError.bind(this);
@@ -55,10 +61,6 @@ class InvoiceView extends Component {
     this.handleEndDayChange = this.handleEndDayChange.bind(this);
     this.postParametersAndGetExcel = this.postParametersAndGetExcel.bind(this);
     this.postSuccessfull = this.postSuccessfull.bind(this);
-    this.handleCustomerFilterChange = this.handleCustomerFilterChange.bind(
-      this
-    );
-    this.handleProjectFilterChange = this.handleProjectFilterChange.bind(this);
     this.handlePersonFilterChange = this.handlePersonFilterChange.bind(this);
 
     this.postPreviewParameters = this.postPreviewParameters.bind(this);
@@ -67,19 +69,14 @@ class InvoiceView extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(getPreview({ Person: this.props.person, Filter: {} }));
-
-    /*
-    fetch("/rest/admin/report/options", {
-      credentials: "same-origin",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.fetchSuccessfull)
-      .catch(this.connectionError);
-      */
+    this.props.dispatch(
+      getPreview({
+        beginDate: null,
+        endDate: null,
+        doctorFilter: [],
+        examinationFilter: []
+      })
+    );
   }
 
   fetchSuccessfull(response) {
@@ -224,31 +221,29 @@ class InvoiceView extends Component {
     }
   }
 
-  handleCustomerFilterChange(value) {
-    this.setState({
-      customerFilter: value,
-      projectFilter: []
-    });
-    this.postPreviewParameters(
-      this.state.beginDay,
-      this.state.endDay,
-      value,
-      [],
-      this.state.personFilter
+  handleDoctorFilterChange(value) {
+    console.log("handleDoctorFilterChange");
+    console.log(value);
+    this.props.dispatch(
+      getPreview({
+        beginDate: this.props.beginDate,
+        endDate: this.props.endDate,
+        doctorFilter: value,
+        examinationFilter: this.props.examinationFilter
+      })
     );
   }
 
-  handleProjectFilterChange(value) {
-    this.setState({
-      projectFilter: value,
-      customerFilter: []
-    });
-    this.postPreviewParameters(
-      this.state.beginDay,
-      this.state.endDay,
-      [],
-      value,
-      this.state.personFilter
+  handleExaminationFilterChange(value) {
+    console.log("handleExaminationFilterChange");
+    console.log(value);
+    this.props.dispatch(
+      getPreview({
+        beginDate: this.props.beginDate,
+        endDate: this.props.endDate,
+        doctorFilter: this.props.doctorFilter,
+        examinationFilter: value
+      })
     );
   }
 
@@ -338,14 +333,14 @@ class InvoiceView extends Component {
                 <Select
                   closeOnSelect={true}
                   disabled={false}
-                  multi
-                  onChange={this.handleCustomerFilterChange}
-                  options={this.state.doctorOptions}
+                  isMulti
+                  onChange={this.handleDoctorFilterChange}
+                  options={this.props.doctorOptions}
                   placeholder="Valitse lääkäri(t)"
                   removeSelected={true}
                   rtl={false}
                   simpleValue={false}
-                  value={this.state.doctorFilter}
+                  value={this.props.doctorFilter}
                 />
               </Col>
               <Col componentClass={ControlLabel} sm={3}>
@@ -355,14 +350,14 @@ class InvoiceView extends Component {
                 <Select
                   closeOnSelect={true}
                   disabled={false}
-                  multi
-                  onChange={this.handlePersonFilterChange}
-                  options={this.state.examinationOptions}
+                  isMulti
+                  onChange={this.handleExaminationFilterChange}
+                  options={this.props.examinationOptions}
                   placeholder="Valitse tutkimus/ tutkimukset"
                   removeSelected={true}
                   rtl={false}
                   simpleValue={false}
-                  value={this.state.examinationFilter}
+                  value={this.props.examinationFilter}
                 />
               </Col>
             </FormGroup>
@@ -398,7 +393,13 @@ class InvoiceView extends Component {
 
 function mapStateToProps(state) {
   return {
-    person: state.person
+    person: state.person,
+    beginDate: state.invoice.beginDate,
+    endDate: state.invoice.endDate,
+    doctorOptions: state.invoice.doctorOptions,
+    doctorFilter: state.invoice.doctorFilter,
+    examinationOptions: state.invoice.examinationOptions,
+    examinationFilter: state.invoice.examinationFilter
   };
 }
 
