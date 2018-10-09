@@ -51,6 +51,7 @@ export function getPreview({
   doctorFilter,
   examinationFilter
 }) {
+  /*
   console.log("api.getPreview");
   console.log({
     beginDate,
@@ -58,6 +59,7 @@ export function getPreview({
     doctorFilter,
     examinationFilter
   });
+  */
   return client.post("/rest/invoice", {
     beginDate,
     endDate,

@@ -178,15 +178,15 @@ class InvoiceView extends Component {
     if (selectedDay == undefined) {
       // ignore
     } else {
-      this.setState({
-        beginDay: selectedDay
-      });
-      this.postPreviewParameters(
-        selectedDay,
-        this.state.endDay,
-        this.state.customerFilter,
-        this.state.projectFilter,
-        this.state.personFilter
+      console.log("handleEndDayChange");
+      console.log(selectedDay);
+      this.props.dispatch(
+        getPreview({
+          beginDate: moment(selectedDay).format("YYYY-MM-DD"),
+          endDate: this.props.endDate,
+          doctorFilter: this.props.doctorFilter,
+          examinationFilter: this.props.examinationFilter
+        })
       );
     }
   }
@@ -295,7 +295,13 @@ class InvoiceView extends Component {
                 />
               </Col>
               <Col sm={2}>
-                <Button bsStyle="primary">Tee lasku</Button>
+                <Button
+                  bsStyle="primary"
+                  type="button"
+                  onClick={this.postParametersAndGetExcel}
+                >
+                  Tee lasku
+                </Button>
               </Col>
             </FormGroup>
           </Panel>
@@ -340,7 +346,7 @@ class InvoiceView extends Component {
           </Panel>
 
           <Panel header={PreviewPanelTitle}>
-            <BootstrapTable data={this.state.preview} striped hover>
+            <BootstrapTable data={this.props.preview} striped hover>
               <TableHeaderColumn dataField="id" isKey hidden>
                 ID
               </TableHeaderColumn>
@@ -357,14 +363,6 @@ class InvoiceView extends Component {
               <TableHeaderColumn dataField="count">lkm</TableHeaderColumn>
             </BootstrapTable>
           </Panel>
-
-          <Button
-            type="button"
-            onClick={this.postParametersAndGetExcel}
-            bsStyle="primary"
-          >
-            Generate Excel Report
-          </Button>
         </Form>
       </Grid>
     );
@@ -372,11 +370,8 @@ class InvoiceView extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log("InvoiceView.mapStateToProps");
-  console.log(state);
   const beginDate = moment(state.invoice.beginDate, "YYYY-MM-DD");
   const endDate = moment(state.invoice.endDate, "YYYY-MM-DD");
-
   return {
     person: state.person,
     beginDate: state.invoice.beginDate,
@@ -384,7 +379,8 @@ function mapStateToProps(state) {
     doctorOptions: state.invoice.doctorOptions,
     doctorFilter: state.invoice.doctorFilter,
     examinationOptions: state.invoice.examinationOptions,
-    examinationFilter: state.invoice.examinationFilter
+    examinationFilter: state.invoice.examinationFilter,
+    preview: state.invoice.preview
   };
 }
 
