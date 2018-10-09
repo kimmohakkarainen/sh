@@ -9,7 +9,6 @@ import { fetchState } from "./actions";
 import DummyView from "./dummyview";
 import EnterView from "./enterview";
 import DoctorView from "./doctorview";
-import LoginView from "./loginview";
 import PersonAdminView from "./personadminview";
 import InvoiceView from "./invoiceview";
 
@@ -21,7 +20,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {!this.props.person && <LoginView />}
         {this.props.person && (
           <Router>
             <div>
