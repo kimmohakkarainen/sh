@@ -6,6 +6,7 @@ export default function poriState(
     newTasks: [],
     assignedTasks: [],
     processedTasks: [],
+    examinationOptions: [],
     users: [],
     invoice: {
       beginDate: null,
@@ -18,12 +19,14 @@ export default function poriState(
   },
   action
 ) {
+  console.log(action);
   if (action.type === "FETCH_STATE_SUCCEEDED") {
     return {
       person: action.payload.person,
       newTasks: action.payload.newTasks,
       assignedTasks: action.payload.assignedTasks,
       processedTasks: action.payload.processedTasks,
+      examinationOptions: action.payload.examinationOptions,
       users: state.users,
       invoice: state.invoice
     };

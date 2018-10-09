@@ -29,22 +29,10 @@ import "react-day-picker/lib/style.css";
 class InvoiceView extends Component {
   constructor(props, path) {
     super(props);
+
     this.state = {
       url: props.match.url,
-      beginDay: moment().startOf("month"),
-      endDay: moment().endOf("month"),
-      errorMsg: null,
-      doctorFilter: [],
-      doctorOptions: [
-        { value: 1, label: "Doctor Möttönen", personId: 1 },
-        { value: 2, label: "Doctor Nikula", personId: 2 }
-      ],
-      examinationFilter: [],
-      examinationOptions: [
-        { value: 1, label: "EKG 24h" },
-        { value: 2, label: "phB 12h" }
-      ],
-      preview: []
+      errorMsg: null
     };
 
     this.handleDoctorFilterChange = this.handleDoctorFilterChange.bind(this);
@@ -61,7 +49,6 @@ class InvoiceView extends Component {
     this.handleEndDayChange = this.handleEndDayChange.bind(this);
     this.postParametersAndGetExcel = this.postParametersAndGetExcel.bind(this);
     this.postSuccessfull = this.postSuccessfull.bind(this);
-    this.handlePersonFilterChange = this.handlePersonFilterChange.bind(this);
 
     this.postPreviewParameters = this.postPreviewParameters.bind(this);
     this.postPreviewSuccessfull = this.postPreviewSuccessfull.bind(this);
@@ -247,17 +234,6 @@ class InvoiceView extends Component {
     );
   }
 
-  handlePersonFilterChange(value) {
-    this.setState({ personFilter: value });
-    this.postPreviewParameters(
-      this.state.beginDay,
-      this.state.endDay,
-      this.state.customerFilter,
-      this.state.projectFilter,
-      value
-    );
-  }
-
   render() {
     const { beginDate, endDate } = this.props;
     const DAY_FORMAT = "D.M.YYYY";
@@ -271,14 +247,14 @@ class InvoiceView extends Component {
       localeUtils: MomentLocaleUtils
     };
 
-    const TimeRangeTitle = <h3>Time Range</h3>;
-    const FilterPanelTitle = <h3>Filter</h3>;
-    const PreviewPanelTitle = <h3>Preview</h3>;
+    const TimeRangeTitle = <h3>Aikaväli</h3>;
+    const FilterPanelTitle = <h3>Suodatus</h3>;
+    const PreviewPanelTitle = <h3>Esikatselu</h3>;
 
     return (
       <Grid>
         <PageHeader>
-          <small>Reporting</small>
+          <small>Laskutus</small>
         </PageHeader>
 
         {this.state.errorMsg && (
@@ -368,13 +344,17 @@ class InvoiceView extends Component {
               <TableHeaderColumn dataField="id" isKey hidden>
                 ID
               </TableHeaderColumn>
-              <TableHeaderColumn dataField="customer">
-                Customer
+              <TableHeaderColumn dataField="doctor">Lääkäri</TableHeaderColumn>
+              <TableHeaderColumn dataField="examination">
+                Tutkimus
               </TableHeaderColumn>
-              <TableHeaderColumn dataField="project">Project</TableHeaderColumn>
-              <TableHeaderColumn dataField="person">Person</TableHeaderColumn>
-              <TableHeaderColumn dataField="hours">Hours</TableHeaderColumn>
-              <TableHeaderColumn dataField="notes">Notes</TableHeaderColumn>
+              <TableHeaderColumn dataField="dpart">
+                Lääkärin korvaus yht.
+              </TableHeaderColumn>
+              <TableHeaderColumn dataField="sum">
+                Laskutettava yhteensä
+              </TableHeaderColumn>
+              <TableHeaderColumn dataField="count">lkm</TableHeaderColumn>
             </BootstrapTable>
           </Panel>
 

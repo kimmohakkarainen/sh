@@ -34,6 +34,8 @@ class InProgressEntries extends Component {
               {this.props.assignedTasks.map(function(task) {
                 const syntymaaika =
                   task.hetu == null ? "" : task.hetu.slice(0, 6);
+                const tutkimus =
+                  task.tutkimus == null ? "" : task.tutkimus.name;
                 return (
                   <tr key={task.taskId}>
                     <td>
@@ -44,7 +46,7 @@ class InProgressEntries extends Component {
                       />
                     </td>
                     <td>{task.vastaanottoPaiva}</td>
-                    <td>{task.tutkimus}</td>
+                    <td>{tutkimus}</td>
                     <td>{task.esitietolomake}</td>
                     <td>{syntymaaika}</td>
                     <td>{task.sukunimi}</td>

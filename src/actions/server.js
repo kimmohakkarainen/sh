@@ -59,7 +59,8 @@ export function fetchStateSucceeded(data) {
       person: data.person,
       newTasks: data.newTasks,
       assignedTasks: data.assignedTasks,
-      processedTasks: data.processedTasks
+      processedTasks: data.processedTasks,
+      examinationOptions: data.examinationOptions
     }
   };
 }
