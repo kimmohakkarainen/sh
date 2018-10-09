@@ -208,15 +208,15 @@ class InvoiceView extends Component {
     if (selectedDay == undefined) {
       // ignore
     } else {
-      this.setState({
-        endDay: selectedDay
-      });
-      this.postPreviewParameters(
-        this.state.beginDay,
-        selectedDay,
-        this.state.customerFilter,
-        this.state.projectFilter,
-        this.state.personFilter
+      console.log("handleEndDayChange");
+      console.log(selectedDay);
+      this.props.dispatch(
+        getPreview({
+          beginDate: this.props.beginDate,
+          endDate: moment(selectedDay).format("YYYY-MM-DD"),
+          doctorFilter: this.props.doctorFilter,
+          examinationFilter: this.props.examinationFilter
+        })
       );
     }
   }
@@ -259,12 +259,12 @@ class InvoiceView extends Component {
   }
 
   render() {
-    const { beginDay, endDay } = this.state;
+    const { beginDate, endDate } = this.props;
     const DAY_FORMAT = "D.M.YYYY";
-    const formattedBeginDay = beginDay
-      ? moment(beginDay).format(DAY_FORMAT)
+    const formattedBeginDay = beginDate
+      ? moment(beginDate).format(DAY_FORMAT)
       : "";
-    const formattedEndDay = endDay ? moment(endDay).format(DAY_FORMAT) : "";
+    const formattedEndDay = endDate ? moment(endDate).format(DAY_FORMAT) : "";
 
     const dayPickerProps = {
       locale: "fi",
@@ -392,6 +392,11 @@ class InvoiceView extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log("InvoiceView.mapStateToProps");
+  console.log(state);
+  const beginDate = moment(state.invoice.beginDate, "YYYY-MM-DD");
+  const endDate = moment(state.invoice.endDate, "YYYY-MM-DD");
+
   return {
     person: state.person,
     beginDate: state.invoice.beginDate,

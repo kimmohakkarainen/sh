@@ -1,4 +1,5 @@
 import * as api from "../api";
+import moment from "moment";
 
 export function getPreview({
   beginDate,
@@ -11,9 +12,15 @@ export function getPreview({
   console.log(endDate);
   console.log(doctorFilter);
   console.log(examinationFilter);
+
   return dispatch => {
     api
-      .getPreview({ beginDate, endDate, doctorFilter, examinationFilter })
+      .getPreview({
+        beginDate,
+        endDate,
+        doctorFilter,
+        examinationFilter
+      })
       .then(resp => {
         dispatch(fetchPreviewSucceeded(resp.data));
       });
