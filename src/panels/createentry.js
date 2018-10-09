@@ -21,9 +21,10 @@ import {
   HelpBlock,
   Table
 } from "react-bootstrap";
+import Select from "react-select";
 
 import TutkimusValinnat from "./tutkimusvalinnat";
-import { createTask } from "../actions";
+import { createTask, postCreate } from "../actions";
 
 class CreateEntry extends Component {
   constructor(props) {
@@ -89,10 +90,6 @@ class CreateEntry extends Component {
     const expanded = !this.state.esitietolomakeExpanded;
     const valid = expanded ? null : true;
 
-    console.log("handleEsitietolomakeToggle");
-    console.log(expanded);
-    console.log(valid);
-
     this.setState({
       esitietolomakeExpanded: expanded,
       esitietolomakeValid: valid,
@@ -124,13 +121,15 @@ class CreateEntry extends Component {
       tutkimusValid === "success" &&
       esitietolomakeValid === "success"
     ) {
-      const parms = createTask({
+      const parms = postCreate({
         Person: this.props.person,
         Task: {
           taskId: null,
           hetu: this.state.hetu,
           sukunimi: this.state.sukunimi,
-          tutkimus: this.state.tutkimus,
+          tutkimus: {
+            examinationId: this.state.tutkimus.value
+          },
           tutkimusPaiva: this.state.tutkimusPaiva,
           vastaanottoPaiva: this.state.vastaanottoPaiva,
           lisatiedot: this.state.lisatiedot,
@@ -191,14 +190,21 @@ class CreateEntry extends Component {
         </FormGroup>
         <FormGroup validationState={this.state.tutkimusValid}>
           <ControlLabel>Tutkimus</ControlLabel>
-          <TutkimusValinnat
-            value={this.state.tutkimus}
-            onChange={e => {
+          <Select
+            closeOnSelect={true}
+            disabled={false}
+            onChange={value => {
               this.setState({
-                tutkimus: e.target.value,
+                tutkimus: value,
                 tutkimusValid: "success"
               });
             }}
+            options={this.props.examinationOptions}
+            placeholder="Valitse tutkimus"
+            removeSelected={false}
+            rtl={false}
+            simpleValue={false}
+            value={this.state.tutkimus}
           />
           {false && <HelpBlock>Syötä tähän tutkimusmuoto</HelpBlock>}
         </FormGroup>
@@ -265,7 +271,10 @@ class CreateEntry extends Component {
 }
 
 function mapStateToProps(state) {
-  return { person: state.person };
+  return {
+    person: state.person,
+    examinationOptions: state.examinationOptions
+  };
 }
 
 export default connect(mapStateToProps)(CreateEntry);

@@ -34,10 +34,11 @@ const IPEntries = props => {
         {props.tasks.map(function(task) {
           const laakari = task.laakari == null ? "" : task.laakari.email;
           const syntymaaika = task.hetu == null ? "" : task.hetu.slice(0, 6);
+          const tutkimus = task.tutkimus == null ? "" : task.tutkimus.name;
           return (
             <tr key={task.taskId}>
               <td>{laakari}</td>
-              <td>{task.tutkimus}</td>
+              <td>{tutkimus}</td>
               <td>{task.vastaanottoPaiva}</td>
               <td>{syntymaaika}</td>
               <td>{task.sukunimi}</td>
@@ -50,7 +51,6 @@ const IPEntries = props => {
 };
 
 const Entries = props => {
-  console.log(props);
   return (
     <Table striped condensed hover>
       <thead>
@@ -67,10 +67,11 @@ const Entries = props => {
       <tbody>
         {props.tasks.map(function(task) {
           const syntymaaika = task.hetu == null ? "" : task.hetu.slice(0, 6);
+          const tutkimus = task.tutkimus == null ? "" : task.tutkimus.name;
           return (
             <tr key={task.taskId}>
               <td>{task.tutkimusPaiva}</td>
-              <td>{task.tutkimus}</td>
+              <td>{tutkimus}</td>
               <td>{syntymaaika}</td>
               <td>{task.sukunimi}</td>
               <td>{task.vastaanottoPaiva}</td>

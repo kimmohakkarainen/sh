@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { Button, Table } from "react-bootstrap";
 import ActionButton from "./actionbutton";
-import { assignTask } from "../actions";
+import { assignTask, postAssign } from "../actions";
 
 class NewEntries extends Component {
   constructor(props) {
@@ -12,8 +12,6 @@ class NewEntries extends Component {
   }
 
   render() {
-    console.log(this.props);
-
     return (
       <div>
         {this.props.newTasks.length > 0 && (
@@ -34,17 +32,20 @@ class NewEntries extends Component {
               {this.props.newTasks.map(function(task) {
                 const syntymaaika =
                   task.hetu == null ? "" : task.hetu.slice(0, 6);
+                const tutkimus =
+                  task.tutkimus == null ? "" : task.tutkimus.name;
+
                 return (
                   <tr key={task.taskId}>
                     <td>
                       <ActionButton
                         task={task}
-                        createAction={assignTask}
+                        createAction={postAssign}
                         text="Työlistalle"
                       />
                     </td>
                     <td>{task.tutkimusPaiva}</td>
-                    <td>{task.tutkimus}</td>
+                    <td>{tutkimus}</td>
                     <td>{syntymaaika}</td>
                     <td>{task.sukunimi}</td>
                     <td>{task.vastaanottoPaiva}</td>

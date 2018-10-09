@@ -8,9 +8,7 @@ class Menu extends React.Component {
       <Navbar collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/">
-              Tiedot<sup>2</sup>
-            </a>
+            Tiedot<sup>2</sup>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>

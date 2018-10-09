@@ -1,44 +1,13 @@
-let _id = 1;
-export function uniqueId() {
-  return _id++;
-}
+export {
+  postLogin,
+  fetchState,
+  fetchStateSucceeded,
+  postCreate,
+  postAssign,
+  postUnassign,
+  postFinish
+} from "./server";
 
-export function createTask({ Person, Task }) {
-  return {
-    type: "CREATE_TASK",
-    payload: {
-      Person,
-      Task
-    }
-  };
-}
+export { getUsers, modifyUser } from "./admincalls";
 
-export function assignTask({ Person, Task }) {
-  return {
-    type: "ASSIGN_TASK",
-    payload: {
-      Person,
-      Task
-    }
-  };
-}
-
-export function unassignTask({ Person, Task }) {
-  return {
-    type: "UNASSIGN_TASK",
-    payload: {
-      Person,
-      Task
-    }
-  };
-}
-
-export function finishTask({ Person, Task }) {
-  return {
-    type: "FINISH_TASK",
-    payload: {
-      Person,
-      Task
-    }
-  };
-}
+export { getPreview, fetchPreviewSucceeded } from "./invoice";
