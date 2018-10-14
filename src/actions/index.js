@@ -1,5 +1,6 @@
 export {
   postLogin,
+  postLogout,
   fetchState,
   fetchStateSucceeded,
   postCreate,
@@ -11,3 +12,5 @@ export {
 export { getUsers, modifyUser } from "./admincalls";
 
 export { getPreview, fetchPreviewSucceeded } from "./invoice";
+
+

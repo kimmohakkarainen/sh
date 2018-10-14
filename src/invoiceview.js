@@ -24,8 +24,6 @@ import Select from "react-select";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import { getPreview } from "./actions";
 
-import "react-day-picker/lib/style.css";
-
 class InvoiceView extends Component {
   constructor(props, path) {
     super(props);

@@ -36,6 +36,16 @@ export default function poriState(
   } else if (action.type === "FETCH_PREVIEW_SUCCEEDED") {
     const newstate = Object.assign({}, state, { invoice: action.payload });
     return newstate;
+  } else if (action.type === "LOGOUT_SUCCEEDED") {
+	  return {
+		  person: null,
+		  newTasks: [],
+		  assignedTasks: [],
+		  processedTasks: [],
+		  examinationOptions: [],
+		  users: [],
+		  invoice: {}
+	  }
   }
   return state;
 }

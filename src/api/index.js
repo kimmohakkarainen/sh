@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "";
 
 const client = axios.create({
   baseURL: API_BASE_URL,
@@ -17,9 +17,16 @@ export function postLogin(params) {
   return client.post("/login", prms);
 }
 
+/* deprecated version
 export function fetchState() {
   return client.get("/rest/state/1");
 }
+*/
+
+export function fetchState() {
+	  return client.get("/rest/state");
+	}
+
 
 export function postCreateTask(params) {
   return client.post("/rest/create/" + params.personId, params);
@@ -51,15 +58,6 @@ export function getPreview({
   doctorFilter,
   examinationFilter
 }) {
-  /*
-  console.log("api.getPreview");
-  console.log({
-    beginDate,
-    endDate,
-    doctorFilter,
-    examinationFilter
-  });
-  */
   return client.post("/rest/invoice", {
     beginDate,
     endDate,
@@ -67,3 +65,9 @@ export function getPreview({
     examinationFilter
   });
 }
+
+export function postLogout() {
+	return client.post("/logout");
+}
+
+

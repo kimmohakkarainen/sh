@@ -16,6 +16,19 @@ export function postLogin(params) {
   };
 }
 
+export function postLogout() {
+	return dispatch => {
+		api.postLogout().then(resp => {
+			console.log('logout successfull');
+			window.location.href='/logout';
+		})
+		.catch(error => {
+			console.log('logout error');
+			window.location.href='/logout';
+		});
+	};
+}
+
 export function postCreate({ Person, Task }) {
   const params = Object.assign({}, Task, { personId: Person.personId });
   return dispatch => {
@@ -64,3 +77,12 @@ export function fetchStateSucceeded(data) {
     }
   };
 }
+
+export function logoutSucceeded(data) {
+	  return {
+	    type: "LOGOUT_SUCCEEDED",
+	    payload: {
+	    }
+	  };
+	}
+
