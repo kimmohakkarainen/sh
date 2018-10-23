@@ -22,9 +22,7 @@ import MomentLocaleUtils, {
 } from "react-day-picker/moment";
 import Select from "react-select";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
-import { getPreview } from "./actions";
-
-import "react-day-picker/lib/style.css";
+import { getPreview, getExcel } from "./actions";
 
 class InvoiceView extends Component {
   constructor(props, path) {
@@ -36,23 +34,11 @@ class InvoiceView extends Component {
     };
 
     this.handleDoctorFilterChange = this.handleDoctorFilterChange.bind(this);
-    this.handleExaminationFilterChange = this.handleExaminationFilterChange.bind(
-      this
-    );
-
-    this.fetchSuccessfull = this.fetchSuccessfull.bind(this);
-    this.handleResponse = this.handleResponse.bind(this);
-    this.connectionError = this.connectionError.bind(this);
-    this.postError = this.postError.bind(this);
+    this.handleExaminationFilterChange = this.handleExaminationFilterChange.bind(this);
 
     this.handleBeginDayChange = this.handleBeginDayChange.bind(this);
     this.handleEndDayChange = this.handleEndDayChange.bind(this);
     this.postParametersAndGetExcel = this.postParametersAndGetExcel.bind(this);
-    this.postSuccessfull = this.postSuccessfull.bind(this);
-
-    this.postPreviewParameters = this.postPreviewParameters.bind(this);
-    this.postPreviewSuccessfull = this.postPreviewSuccessfull.bind(this);
-    this.handlePreviewResponse = this.handlePreviewResponse.bind(this);
   }
 
   componentDidMount() {
@@ -66,112 +52,15 @@ class InvoiceView extends Component {
     );
   }
 
-  fetchSuccessfull(response) {
-    if (response.redirected) {
-      window.location.href = "/admin/reports";
-    } else if (response.ok) {
-      response.json().then(this.handleResponse);
-    }
-  }
-
-  handleResponse(response) {
-    this.setState({
-      options: response,
-      customerOptions: response.customerOptions,
-      customerFilter: response.customerFilter,
-      personOptions: response.personOptions,
-      personFilter: response.personFilter,
-      projectOptions: response.projectOptions,
-      projectFilter: response.projectFilter,
-      preview: response.preview
-    });
-  }
-
-  connectionError(error) {
-    this.setState({ errorMsg: "Connection with server broken" });
-  }
-
-  handleExcelBlob(response) {
-    var a = document.createElement("a");
-    a.href = window.URL.createObjectURL(response);
-    a.download = "report.xlsx";
-    a.style.display = "none";
-    document.body.appendChild(a);
-    a.click();
-  }
-
-  postSuccessfull(response) {
-    if (response.redirected) {
-      window.location.href = "/admin/reports";
-    } else if (response.ok) {
-      this.setState({ errorMsg: null });
-      response.blob().then(this.handleExcelBlob);
-    }
-  }
-
-  postError(error) {
-    this.setState({ errorMsg: error });
-  }
-
   postParametersAndGetExcel() {
-    const postData = {
-      beginDay: moment(this.state.beginDay).format("YYYY-MM-DD"),
-      endDay: moment(this.state.endDay).format("YYYY-MM-DD"),
-      customerFilter: this.state.customerFilter,
-      personFilter: this.state.personFilter,
-      projectFilter: this.state.projectFilter
-    };
-    fetch("/rest/admin/report/xlsx", {
-      credentials: "same-origin",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(postData)
-    })
-      .then(this.postSuccessfull)
-      .catch(this.postError);
-  }
-
-  postPreviewParameters(
-    beginDay,
-    endDay,
-    customerFilter,
-    projectFilter,
-    personFilter
-  ) {
-    const postData = {
-      beginDay: moment(beginDay).format("YYYY-MM-DD"),
-      endDay: moment(endDay).format("YYYY-MM-DD"),
-      customerFilter: customerFilter,
-      personFilter: personFilter,
-      projectFilter: projectFilter
-    };
-    fetch("/rest/admin/report/preview", {
-      credentials: "same-origin",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(postData)
-    })
-      .then(this.postPreviewSuccessfull)
-      .catch(this.postError);
-  }
-
-  postPreviewSuccessfull(response) {
-    if (response.redirected) {
-      window.location.href = "/admin/reports";
-    } else if (response.ok) {
-      response.json().then(this.handlePreviewResponse);
-    }
-  }
-
-  handlePreviewResponse(response) {
-    console.log(response);
-    this.setState({
-      preview: response.preview
-    });
+	    this.props.dispatch(
+	    		getExcel({ 
+	    			beginDate: this.props.beginDate, 
+	    			EndDate: this.props.endDate, 
+	    			doctorFilter: this.props.doctorFilter, 
+	    			examinationFilter: this.props.examinationFilter
+	    })
+	 );
   }
 
   handleBeginDayChange(selectedDay, modifiers) {
@@ -252,7 +141,8 @@ class InvoiceView extends Component {
     const PreviewPanelTitle = <h3>Esikatselu</h3>;
 
     return (
-      <Grid>
+      <div className="billingContainer">
+      <Grid >
         <PageHeader>
           <small>Laskutus</small>
         </PageHeader>
@@ -365,6 +255,7 @@ class InvoiceView extends Component {
           </Panel>
         </Form>
       </Grid>
+      </div>
     );
   }
 }

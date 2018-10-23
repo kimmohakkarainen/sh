@@ -1,4 +1,123 @@
 .App {
-  font-family: sans-serif;
-  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px; 
+  font-style: normal;
+  color: rgba(0, 0, 0, 0.7);
 }
+.logo{
+  margin-top: 30px;
+  margin-left: 30px;
+}
+.footerlogo{
+  margin-left: 30px;
+}
+.midcol{
+  margin-top: 30px;
+}
+/*
+lisää paneeleihin + ja - ikonit*/
+/* Title */
+.navbar{
+  border-color: #51afe1;
+}
+#loggedUsr{
+  position: absolute; 
+  right: 0;
+}
+.navbar-default .navbar-brand {
+  color: #51afe1;
+  width:fit-content;
+}
+.navbar-nav > li > a{
+  background-color: rgba(81, 175, 225, 0.8) !important;
+}
+.navbar-nav li a:hover, .navbar-nav > .active > a {
+  background-color:#51afe1 !important;
+  background-image: none !important;
+}
+.navbar-nav .open .dropdown-menu {
+  background-color:#51afe1 ;
+}
+.panel-primary{
+  border-radius: 8px;
+  border-color: #51afe1;
+  background: rgba(0, 0, 0, 0.05);
+}
+.panel-primary > .panel-heading {
+  border: 0;
+}
+.panel-default{
+  border-radius: 8px;
+  border-color: #51afe1;
+  background: rgba(0, 0, 0, 0.05);
+}
+.panel > .panel-heading {
+  background-image: none;
+  background-color:#51afe1;
+  color: white;
+}
+.btn-primary {
+  color: #ffffff;
+  background: #51afe1;
+  border-color: rgba(0, 0, 0, 0.05);
+}
+.btn-primary:hover {
+  background-color: #307aa1;
+}
+#myBtn{
+  color: #ffffff;
+  background: #51afe1;
+  border-color: rgba(0, 0, 0, 0.05);
+  /* -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale; */
+}
+#myBtn:hover{
+  background-color: #307aa1;
+}
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+  background-color: rgba(81, 175, 225, 0.2);
+}
+ul.nav li a, ul.nav li a:visited {
+  color: #ffffff !important;
+}
+ul.nav li.active a {
+  color: #ffffff !important;
+  font-weight: bold;
+}
+ul.nav li a:hover, ul.nav li a:active {
+  color: #e0e0e0 !important;
+}
+form, input, label, p {
+  color: rgba(55, 58, 60, 0.8)!important;
+}
+.form-control:focus {
+  border-color: #51afe1;
+}
+.footer{
+  
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: rgba(255, 255, 255, 0.0);
+  position:fixed;
+  left:0;
+  bottom:0;
+  right:0;
+}
+.myFooterTxt{
+  
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-left: 15px;
+  font-size: 12px;
+  color:rgb(129, 129, 129);
+}
+.billingContainer{
+  
+  display: flex;
+  
+}
+
+
+
+

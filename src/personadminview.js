@@ -33,7 +33,10 @@ class PersonAdminView extends Component {
     const person = {
       Person: {
         personId: e.personId,
+        username: e.username,
         email: e.email,
+        fullname: e.fullname,
+        password: e.password,
         role: e.role
       }
     };

@@ -100,24 +100,35 @@ class EnterView extends Component {
   }
 
   render() {
+    const iconClass = this.state.open
+      ? 'fa fa-plus-circle fa-fw'
+      : 'fa fa-minus-circle fa-fw';
+      
     return (
       <div>
         <Panel bsStyle="primary" defaultExpanded>
           <Panel.Heading>
-            <Panel.Title toggle componentClass="h3">
-              Syötä lausuttavan tiedot
+            <Panel.Title toggle componentClass="h3" onClick={() => this.setState({ open: !this.state.open})}>
+
+            <i className={iconClass} />
+              Syötä lausuttavan tiedot   
+              
             </Panel.Title>
           </Panel.Heading>
           <Panel.Collapse>
             <Panel.Body>
+           
+
               <CreateEntry />
+              
             </Panel.Body>
           </Panel.Collapse>
         </Panel>
         {this.props.newTasks.length > 0 && (
           <Panel defaultExpanded>
             <Panel.Heading>
-              <Panel.Title toggle componentClass="h3">
+              <Panel.Title toggle componentClass="h3" >
+             
                 Uudet lausuttavat
               </Panel.Title>
             </Panel.Heading>
