@@ -18,22 +18,37 @@ class Menu extends React.Component {
               <NavItem eventKey={2} href="/">
                 Lausuttavat
               </NavItem>
-            </IndexLinkContainer> 
-          	{ (this.props.role === 'ADMIN' || this.props.role === 'SECRETARY') &&  
-            <IndexLinkContainer to="/billing">
-            <NavItem eventKey={4} href="/billing">
-              Laskutus
-            </NavItem>
-            </IndexLinkContainer>}
-          	{ this.props.role === 'ADMIN' &&
-            <IndexLinkContainer to="/admin/rights">
-            <NavItem eventKey={4} href="/admin/rights">
-              Käyttöoikeudet
-            </NavItem>
-          </IndexLinkContainer> }
+            </IndexLinkContainer>
+            {(this.props.role === "ADMIN" ||
+              this.props.role === "SECRETARY") && (
+              <IndexLinkContainer to="/billing">
+                <NavItem eventKey={4} href="/billing">
+                  Laskutus
+                </NavItem>
+              </IndexLinkContainer>
+            )}
+            {(this.props.role === "ADMIN" ||
+              this.props.role === "SECRETARY") && (
+              <IndexLinkContainer to="/admin/edit">
+                <NavItem eventKey={4} href="/admin/edit">
+                  Muokkaus
+                </NavItem>
+              </IndexLinkContainer>
+            )}
+            {this.props.role === "ADMIN" && (
+              <IndexLinkContainer to="/admin/rights">
+                <NavItem eventKey={4} href="/admin/rights">
+                  Käyttöoikeudet
+                </NavItem>
+              </IndexLinkContainer>
+            )}
           </Nav>
           <Nav id="loggedUsr">
-            <NavDropdown eventKey={6} title={this.props.personName} id="user-dropdown" >
+            <NavDropdown
+              eventKey={6}
+              title={this.props.personName}
+              id="user-dropdown"
+            >
               <IndexLinkContainer to="/password">
                 <MenuItem eventKey={6.1}>Vaihda salasana</MenuItem>
               </IndexLinkContainer>
