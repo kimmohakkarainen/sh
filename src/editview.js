@@ -44,14 +44,14 @@ class EditView extends Component {
   }
 
   componentDidMount() {
+    /*
     this.props.dispatch(
       getPreview({
         beginDate: null,
         endDate: null,
-        doctorFilter: [],
-        examinationFilter: []
       })
     );
+    */
   }
 
   postParametersAndGetExcel() {
@@ -198,45 +198,6 @@ class EditView extends Component {
               </FormGroup>
             </Panel>
 
-            <Panel header={FilterPanelTitle}>
-              <FormGroup controlId="formHorizontalFilterPanel">
-                <Col componentClass={ControlLabel} sm={3}>
-                  Lääkäri
-                </Col>
-                <Col sm={9}>
-                  <Select
-                    closeOnSelect={true}
-                    disabled={false}
-                    isMulti
-                    onChange={this.handleDoctorFilterChange}
-                    options={this.props.doctorOptions}
-                    placeholder="Valitse lääkäri(t)"
-                    removeSelected={true}
-                    rtl={false}
-                    simpleValue={false}
-                    value={this.props.doctorFilter}
-                  />
-                </Col>
-                <Col componentClass={ControlLabel} sm={3}>
-                  Tutkimus
-                </Col>
-                <Col sm={9}>
-                  <Select
-                    closeOnSelect={true}
-                    disabled={false}
-                    isMulti
-                    onChange={this.handleExaminationFilterChange}
-                    options={this.props.examinationOptions}
-                    placeholder="Valitse tutkimus/ tutkimukset"
-                    removeSelected={true}
-                    rtl={false}
-                    simpleValue={false}
-                    value={this.props.examinationFilter}
-                  />
-                </Col>
-              </FormGroup>
-            </Panel>
-
             <Panel header={PreviewPanelTitle}>
               <BootstrapTable data={this.props.preview} striped hover>
                 <TableHeaderColumn dataField="id" isKey hidden>
@@ -271,10 +232,6 @@ function mapStateToProps(state) {
     person: state.person,
     beginDate: state.invoice.beginDate,
     endDate: state.invoice.endDate,
-    doctorOptions: state.invoice.doctorOptions,
-    doctorFilter: state.invoice.doctorFilter,
-    examinationOptions: state.invoice.examinationOptions,
-    examinationFilter: state.invoice.examinationFilter,
     preview: state.invoice.preview
   };
 }

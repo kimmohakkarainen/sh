@@ -44,7 +44,7 @@ class App extends Component {
                     path="/admin/rights"
                     component={PersonAdminView}
                   />
-                  <Route exact path="/admin/edit" component={PersonAdminView} />
+                  <Route exact path="/admin/edit" component={EditView} />
                   <Route exact path="/password" component={DummyView} />
                   <Route
                     exact
