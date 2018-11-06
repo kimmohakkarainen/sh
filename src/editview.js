@@ -33,11 +33,6 @@ class EditView extends Component {
       errorMsg: null
     };
 
-    this.handleDoctorFilterChange = this.handleDoctorFilterChange.bind(this);
-    this.handleExaminationFilterChange = this.handleExaminationFilterChange.bind(
-      this
-    );
-
     this.handleBeginDayChange = this.handleBeginDayChange.bind(this);
     this.handleEndDayChange = this.handleEndDayChange.bind(this);
     this.postParametersAndGetExcel = this.postParametersAndGetExcel.bind(this);
@@ -97,32 +92,6 @@ class EditView extends Component {
         })
       );
     }
-  }
-
-  handleDoctorFilterChange(value) {
-    console.log("handleDoctorFilterChange");
-    console.log(value);
-    this.props.dispatch(
-      getPreview({
-        beginDate: this.props.beginDate,
-        endDate: this.props.endDate,
-        doctorFilter: value,
-        examinationFilter: this.props.examinationFilter
-      })
-    );
-  }
-
-  handleExaminationFilterChange(value) {
-    console.log("handleExaminationFilterChange");
-    console.log(value);
-    this.props.dispatch(
-      getPreview({
-        beginDate: this.props.beginDate,
-        endDate: this.props.endDate,
-        doctorFilter: this.props.doctorFilter,
-        examinationFilter: value
-      })
-    );
   }
 
   render() {
@@ -204,16 +173,16 @@ class EditView extends Component {
                   ID
                 </TableHeaderColumn>
                 <TableHeaderColumn dataField="doctor">
-                  Lääkäri
+                  Tutkimuspäivä
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="examination">
+                <TableHeaderColumn dataField="doctor">
                   Tutkimus
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="dpart">
-                  Lääkärin korvaus yht.
+                <TableHeaderColumn dataField="hetu">
+                  Henkilötunnus
                 </TableHeaderColumn>
-                <TableHeaderColumn dataField="sum">
-                  Laskutettava yhteensä
+                <TableHeaderColumn dataField="doctor">
+                  Sukunimi
                 </TableHeaderColumn>
                 <TableHeaderColumn dataField="count">lkm</TableHeaderColumn>
               </BootstrapTable>

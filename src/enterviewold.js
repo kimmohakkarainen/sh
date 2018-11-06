@@ -18,7 +18,6 @@ import {
 import { connect } from "react-redux";
 
 import CreateEntry from "./panels/createentry";
-import ModifyEntry from "./panels/modifyentry";
 
 const IPEntries = props => {
   return (
@@ -91,48 +90,54 @@ class EnterView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      enterModalVisible: false,
-      modifyModalVisible: false
+      date: new Date()
     };
+    this.onDayChange = this.onDayChange.bind(this);
+  }
+
+  onDayChange(selectedDay, modifiers, dayPickerInput) {
+    console.log({ selectedDay, modifiers, dayPickerInput });
+    this.setState({ date: selectedDay });
   }
 
   render() {
+    const iconClass = this.state.open
+      ? "fa fa-plus-circle fa-fw"
+      : "fa fa-minus-circle fa-fw";
+
     return (
       <div>
-        <Panel defaultExpanded>
+        <Panel bsStyle="primary" defaultExpanded>
           <Panel.Heading>
-            <Panel.Title toggle componentClass="h3">
-              Uudet lausuttavat
+            <Panel.Title
+              toggle
+              componentClass="h3"
+              onClick={() => this.setState({ open: !this.state.open })}
+            >
+              <i className={iconClass} />
+              Syötä lausuttavan tiedot
             </Panel.Title>
           </Panel.Heading>
           <Panel.Collapse>
             <Panel.Body>
-              <Entries tasks={this.props.newTasks} />
-              <Button
-                bsStyle="primary"
-                onClick={() => {
-                  this.setState({ enterModalVisible: true });
-                }}
-              >
-                Syötä uusi lausuttava
-              </Button>
+              <CreateEntry />
             </Panel.Body>
           </Panel.Collapse>
         </Panel>
-        <Modal
-          show={this.state.enterModalVisible}
-          onHide={() => {
-            this.setState({ enterModalVisible: false });
-          }}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Uusi lausuttava</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <CreateEntry />
-          </Modal.Body>
-          <Modal.Footer />
-        </Modal>
+        {this.props.newTasks.length > 0 && (
+          <Panel defaultExpanded>
+            <Panel.Heading>
+              <Panel.Title toggle componentClass="h3">
+                Uudet lausuttavat
+              </Panel.Title>
+            </Panel.Heading>
+            <Panel.Collapse>
+              <Panel.Body>
+                <Entries tasks={this.props.newTasks} />
+              </Panel.Body>
+            </Panel.Collapse>
+          </Panel>
+        )}
         {this.props.assignedTasks.length > 0 && (
           <Panel defaultExpanded>
             <Panel.Heading>
@@ -147,20 +152,6 @@ class EnterView extends Component {
             </Panel.Collapse>
           </Panel>
         )}
-        <Modal
-          show={this.state.modifyModalVisible}
-          onHide={() => {
-            this.setState({ modifyModalVisible: false });
-          }}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Muokkaa lausuttavaa</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <CreateEntry />
-          </Modal.Body>
-          <Modal.Footer />
-        </Modal>
       </div>
     );
   }
