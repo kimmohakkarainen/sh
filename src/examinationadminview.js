@@ -16,32 +16,30 @@ import {
 } from "react-bootstrap";
 
 import { connect } from "react-redux";
-import { getUsers, modifyUser } from "./actions";
-import PersonTable from "./panels/persontable";
+import { getExaminations, modifyExamination } from "./actions";
+import ExaminationTable from "./panels/examinationtable";
 
-class PersonAdminView extends Component {
+class ExaminationAdminView extends Component {
   constructor(props) {
     super(props);
     this.handleTallenna = this.handleTallenna.bind(this);
   }
 
   componentDidMount() {
-    this.props.dispatch(getUsers(this.props.person));
+    this.props.dispatch(getExaminations());
   }
 
   handleTallenna(e) {
-    const person = {
-      Person: {
-        personId: e.personId,
+    const examination = {
+      Examination: {
+        examinationId: e.examinationId,
         version: e.version,
-        username: e.username,
-        email: e.email,
-        fullname: e.fullname,
-        password: e.password,
-        role: e.role
+        name: e.name,
+        doctorPrice: e.doctorPrice,
+        invoicePrice: e.invoicePrice,
       }
     };
-    this.props.dispatch(modifyUser(person));
+    this.props.dispatch(modifyExamination(examination));
   }
 
   render() {
@@ -49,12 +47,12 @@ class PersonAdminView extends Component {
       <Panel bsStyle="primary">
         <Panel.Heading>
           <Panel.Title toggle componentClass="h3">
-            Käyttäjähallinta
+            Tutkimukset
           </Panel.Title>
         </Panel.Heading>
         <Panel.Body>
-          <PersonTable
-            users={this.props.users}
+          <ExaminationTable
+            examinations={this.props.examinations}
             onTallenna={this.handleTallenna}
           />
         </Panel.Body>
@@ -66,8 +64,8 @@ class PersonAdminView extends Component {
 function mapStateToProps(state) {
   return {
     person: state.person,
-    users: state.users
+    examinations: state.examinations
   };
 }
 
-export default connect(mapStateToProps)(PersonAdminView);
+export default connect(mapStateToProps)(ExaminationAdminView);

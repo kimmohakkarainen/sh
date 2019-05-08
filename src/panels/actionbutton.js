@@ -20,7 +20,8 @@ class ActionButton extends Component {
   }
 
   render() {
-    return <Button onClick={this.handleClick}>{this.props.text}</Button>;
+    return <Button bsStyle="primary" onClick={this.handleClick}>{this.props.text}</Button>;
+    
   }
 }
 

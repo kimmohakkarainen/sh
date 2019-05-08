@@ -9,7 +9,6 @@ export function getUsers({ Person }) {
 }
 
 export function modifyUser({ Person }) {
-  console.log(Person);
   return dispatch => {
     api.postUser(Person).then(resp => {
       dispatch(fetchUsersSucceeded(resp.data));
@@ -22,6 +21,31 @@ export function fetchUsersSucceeded(data) {
     type: "FETCH_USERS_SUCCEEDED",
     payload: {
       users: data
+    }
+  };
+}
+
+export function getExaminations() {
+  return dispatch => {
+    api.getExaminations().then(resp => {
+      dispatch(fetchExaminationsSucceeded(resp.data));
+    });
+  };
+}
+
+export function modifyExamination({ Examination }) {
+  return dispatch => {
+    api.postExamination(Examination).then(resp => {
+      dispatch(fetchExaminationsSucceeded(resp.data));
+    });
+  };
+}
+
+export function fetchExaminationsSucceeded(data) {
+  return {
+    type: "FETCH_EXAMINATIONS_SUCCEEDED",
+    payload: {
+      examinations: data
     }
   };
 }

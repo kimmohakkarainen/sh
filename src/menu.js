@@ -8,37 +8,44 @@ class Menu extends React.Component {
       <Navbar collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            Tiedot<sup>2</sup>
+            Tieto<sup>2</sup>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <IndexLinkContainer to="/">
-              <NavItem eventKey={2} href="/">
-                Lausuttavat
-              </NavItem>
-            </IndexLinkContainer>
-            {(this.props.role === "ADMIN" ||
-              this.props.role === "SECRETARY") && (
+            {this.props.doctor && (
+              <IndexLinkContainer to="/doctor">
+                <NavItem eventKey={4} href="/doctor">
+                  Oma työjono
+                </NavItem>
+              </IndexLinkContainer>
+            )}
+            {(this.props.admin || this.props.secretary) && (
+              <IndexLinkContainer to="/enter">
+                <NavItem eventKey={4} href="/enter">
+                  Työjono
+                </NavItem>
+              </IndexLinkContainer>
+            )}
+            {(this.props.admin || this.props.secretary) && (
               <IndexLinkContainer to="/billing">
                 <NavItem eventKey={4} href="/billing">
                   Laskutus
                 </NavItem>
               </IndexLinkContainer>
             )}
-            {(this.props.role === "ADMIN" ||
-              this.props.role === "SECRETARY") && (
-              <IndexLinkContainer to="/admin/edit">
-                <NavItem eventKey={4} href="/admin/edit">
-                  Muokkaus
-                </NavItem>
-              </IndexLinkContainer>
-            )}
-            {this.props.role === "ADMIN" && (
+            {this.props.admin && (
               <IndexLinkContainer to="/admin/rights">
                 <NavItem eventKey={4} href="/admin/rights">
                   Käyttöoikeudet
+                </NavItem>
+              </IndexLinkContainer>
+            )}
+            {this.props.admin && (
+              <IndexLinkContainer to="/admin/examinations">
+                <NavItem eventKey={4} href="/admin/examinations">
+                  Tutkimukset
                 </NavItem>
               </IndexLinkContainer>
             )}

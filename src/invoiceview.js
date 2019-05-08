@@ -56,7 +56,7 @@ class InvoiceView extends Component {
 	    this.props.dispatch(
 	    		getExcel({ 
 	    			beginDate: this.props.beginDate, 
-	    			EndDate: this.props.endDate, 
+	    			endDate: this.props.endDate, 
 	    			doctorFilter: this.props.doctorFilter, 
 	    			examinationFilter: this.props.examinationFilter
 	    })
@@ -136,7 +136,7 @@ class InvoiceView extends Component {
       localeUtils: MomentLocaleUtils
     };
 
-    const TimeRangeTitle = <h3>Aikaväli</h3>;
+    const TimeRangeTitle = <h3>AikavÃ¤li</h3>;
     const FilterPanelTitle = <h3>Suodatus</h3>;
     const PreviewPanelTitle = <h3>Esikatselu</h3>;
 
@@ -156,10 +156,11 @@ class InvoiceView extends Component {
         <Form horizontal>
           <Panel header={TimeRangeTitle}>
             <FormGroup controlId="formHorizontalDateRange">
-              <Col componentClass={ControlLabel} sm={2}>
+              <Col componentClass={ControlLabel} sm={1}>
                 Begin
               </Col>
-              <Col sm={3}>
+              <Col sm={4}>
+              	<div className="form-control">
                 <DayPickerInput
                   value={formattedBeginDay}
                   onDayChange={this.handleBeginDayChange}
@@ -169,11 +170,13 @@ class InvoiceView extends Component {
                   parseDate={parseDate}
                   dayPickerProps={dayPickerProps}
                 />
+                </div>
               </Col>
-              <Col componentClass={ControlLabel} sm={2}>
+              <Col componentClass={ControlLabel} sm={1}>
                 End
               </Col>
-              <Col sm={3}>
+              <Col sm={4}>
+              	<div className="form-control">
                 <DayPickerInput
                   value={formattedEndDay}
                   onDayChange={this.handleEndDayChange}
@@ -183,6 +186,7 @@ class InvoiceView extends Component {
                   parseDate={parseDate}
                   dayPickerProps={dayPickerProps}
                 />
+                </div>
               </Col>
               <Col sm={2}>
                 <Button
@@ -199,7 +203,7 @@ class InvoiceView extends Component {
           <Panel header={FilterPanelTitle}>
             <FormGroup controlId="formHorizontalFilterPanel">
               <Col componentClass={ControlLabel} sm={3}>
-                Lääkäri
+                LÃ¤Ã¤kÃ¤ri
               </Col>
               <Col sm={9}>
                 <Select
@@ -208,7 +212,7 @@ class InvoiceView extends Component {
                   isMulti
                   onChange={this.handleDoctorFilterChange}
                   options={this.props.doctorOptions}
-                  placeholder="Valitse lääkäri(t)"
+                  placeholder="Valitse lÃ¤Ã¤kÃ¤ri(t)"
                   removeSelected={true}
                   rtl={false}
                   simpleValue={false}
@@ -240,15 +244,15 @@ class InvoiceView extends Component {
               <TableHeaderColumn dataField="id" isKey hidden>
                 ID
               </TableHeaderColumn>
-              <TableHeaderColumn dataField="doctor">Lääkäri</TableHeaderColumn>
+              <TableHeaderColumn dataField="doctor">LÃ¤Ã¤kÃ¤ri</TableHeaderColumn>
               <TableHeaderColumn dataField="examination">
                 Tutkimus
               </TableHeaderColumn>
               <TableHeaderColumn dataField="dpart">
-                Lääkärin korvaus yht.
+                LÃ¤Ã¤kÃ¤rin korvaus yht.
               </TableHeaderColumn>
               <TableHeaderColumn dataField="sum">
-                Laskutettava yhteensä
+                Laskutettava yhteensÃ¤
               </TableHeaderColumn>
               <TableHeaderColumn dataField="count">lkm</TableHeaderColumn>
             </BootstrapTable>
@@ -267,9 +271,9 @@ function mapStateToProps(state) {
     person: state.person,
     beginDate: state.invoice.beginDate,
     endDate: state.invoice.endDate,
-    doctorOptions: state.invoice.doctorOptions,
+    doctorOptions: state.doctorOptions,
     doctorFilter: state.invoice.doctorFilter,
-    examinationOptions: state.invoice.examinationOptions,
+    examinationOptions: state.examinationOptions,
     examinationFilter: state.invoice.examinationFilter,
     preview: state.invoice.preview
   };

@@ -21,7 +21,7 @@ class NewEntries extends Component {
                 <th />
                 <th>Tutkimuspäivä</th>
                 <th>Tutkimus</th>
-                <th>Syntymäaika</th>
+                <th>Potilaan Henkilötunnus</th>
                 <th>Potilaan sukunimi</th>
                 <th>Potilaan vastaanotto</th>
                 <th>Esitietolomake</th>
@@ -30,10 +30,9 @@ class NewEntries extends Component {
             </thead>
             <tbody>
               {this.props.newTasks.map(function(task) {
-                const syntymaaika =
-                  task.hetu == null ? "" : task.hetu.slice(0, 6);
+                const syntymaaika = task.hetu == null ? "" : task.hetu;
                 const tutkimus =
-                  task.tutkimus == null ? "" : task.tutkimus.name;
+                  task.tutkimus == null ? "" : task.tutkimus.label;
 
                 return (
                   <tr key={task.taskId}>
@@ -41,7 +40,7 @@ class NewEntries extends Component {
                       <ActionButton
                         task={task}
                         createAction={postAssign}
-                        text="Työlistalle"
+                        text="Lausuttavaksi"
                       />
                     </td>
                     <td>{task.tutkimusPaiva}</td>

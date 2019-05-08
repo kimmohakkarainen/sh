@@ -4,11 +4,13 @@ import { Panel } from "react-bootstrap";
 
 import NewEntries from "./panels/newentries.js";
 import InProgressEntries from "./panels/inprogressentries.js";
+import ErrorView from "./errorview";
 
 class DoctorView extends Component {
   render() {
     return (
       <div>
+        <ErrorView />
         <Panel bsStyle="primary" defaultExpanded>
           <Panel.Heading>
             <Panel.Title toggle componentClass="h3">

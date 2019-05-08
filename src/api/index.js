@@ -9,20 +9,20 @@ const client = axios.create({
   }
 });
 
-export function postLogin(params) {
-  let prms = new URLSearchParams();
-  prms.append("username", params.username);
-  prms.append("password", params.password);
-
-  return client.post("/login", prms);
+export function fetchState() {
+  return client.get("/rest/state");
 }
 
-export function fetchState() {
-  return client.get("/rest/state/1");
+export function postDeleteTask(params) {
+  return client.post("/rest/delete", params);
 }
 
 export function postCreateTask(params) {
-  return client.post("/rest/create/" + params.personId, params);
+  return client.post("/rest/create", params);
+}
+
+export function postModifyTask(params) {
+  return client.post("/rest/update", params);
 }
 
 export function postAssignTask(params) {
@@ -38,11 +38,27 @@ export function postFinishTask(params) {
 }
 
 export function getUsers() {
-  return client.get("/rest/users");
+  return client.get("/rest/admin/user");
 }
 
 export function postUser(params) {
-  return client.post("/rest/user", params);
+  return client.post("/rest/admin/user", params);
+}
+
+export function getExaminations() {
+  return client.get("/rest/admin/exam");
+}
+
+export function postExamination(params) {
+  return client.post("/rest/admin/exam", params);
+}
+
+export function postPassword(params) {
+  return client.post("/rest/password", params);
+}
+
+export function postLogout() {
+  return client.post("/logout");
 }
 
 export function getPreview({
@@ -51,19 +67,48 @@ export function getPreview({
   doctorFilter,
   examinationFilter
 }) {
-  /*
-  console.log("api.getPreview");
-  console.log({
-    beginDate,
-    endDate,
-    doctorFilter,
-    examinationFilter
-  });
-  */
   return client.post("/rest/invoice", {
     beginDate,
     endDate,
     doctorFilter,
     examinationFilter
   });
+}
+
+const excelClient = axios.create({
+  baseURL: API_BASE_URL,
+  responseType: "blob",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/vnd.ms-excel"
+  }
+});
+
+export function getExcel({
+  beginDate,
+  endDate,
+  doctorFilter,
+  examinationFilter
+}) {
+  excelClient
+    .post("/rest/invoice/xlsx", {
+      beginDate,
+      endDate,
+      doctorFilter,
+      examinationFilter
+    })
+    .then(response => {
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        // this is for IE 11
+        window.navigator.msSaveOrOpenBlob(response.data, "invoice.xlsx");
+      } else {
+        // Non-IE browsers
+        const url = window.URL.createObjectURL(response.data);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "invoice.xlsx");
+        link.click();
+        window.URL.revokeObjectURL(url);
+      }
+    });
 }

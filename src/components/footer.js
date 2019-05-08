@@ -8,7 +8,7 @@ function Footer(/*props*/) {
     <div className="row">
   <div className="col-sm-4"><img className="footerlogo" src="/img/AtoZ-logo.png" height="60" width="60"/>
   <div className="myFooterTxt">
-          © AtoZ Oy 2018
+          Â© AtoZ Oy 2018
         </div>
   </div>
   <div className="col-sm-4">

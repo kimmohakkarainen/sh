@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 
 import {
+	Modal,
   Panel,
   Button,
   ToggleButton,
@@ -21,16 +22,22 @@ import {
   HelpBlock,
   Table
 } from "react-bootstrap";
-import Select from "react-select";
-
+import moment from "moment";
+import DayPickerInput from "react-day-picker/DayPickerInput";
+import MomentLocaleUtils, {
+  formatDate,
+  parseDate
+} from "react-day-picker/moment";
 
 import { createTask, postCreate } from "../actions";
 
-class ModifyEntry extends Component {
+class ModifyTaskModal extends Component {
   constructor(props) {
     super(props);
     this.state = this.clearValues(props.task);
     this.handleClick = this.handleClick.bind(this);
+    this.handleTutkimusPaivaChange = this.handleTutkimusPaivaChange.bind(this);
+    this.handleVastaanottoPaivaChange = this.handleVastaanottoPaivaChange.bind(this);
     this.handleHetu = this.handleHetu.bind(this);
     this.handleSukunimi = this.handleSukunimi.bind(this);
     this.handleEsitietolomake = this.handleEsitietolomake.bind(this);
@@ -40,27 +47,26 @@ class ModifyEntry extends Component {
   }
 
   clearValues(task) {
-	console.log('clearValues');
-	console.log(task);
     return {
       taskId: task.taskId,
+      version: task.version,
       validation: false,
       hetu: task.hetu == null ? '' : task.hetu,
-      hetuValid: null,
+      hetuValid: "success",
       sukunimi: task.sukunimi == null ? '' : task.sukunimi,
-      sukunimiValid: null,
-      tutkimus: task.tutkimus == null ? '' : task.tutkimus,
-      tutkimusValid: null,
+      sukunimiValid:"success",
+      tutkimus: task.tutkimus == null ? null : task.tutkimus.value ,
+      tutkimusValid: "success",
       tutkimusPaiva: task.tutkimusPaiva == null ? '' : task.tutkimusPaiva,
-      tutkimusPaivaValid: null,
+      tutkimusPaivaValid: "success",
       vastaanottoPaiva: task.vastaanottoPaiva == null ? '' : task.vastaanottoPaiva,
       vastaanottoPaivaValid: null,
-      esitietolomake: task.esitietolomake == null ? '' : task.lisatietolomake,
-      esitietolomakeValid: null,
+      esitietolomake: task.esitietolomake == null ? '' : task.esitietolomake,
+      esitietolomakeValid: "success",
       esitietolomakeExpanded:
         task.esitietolomake != null && task.esitietolomake.length > 0,
       lisatiedot: task.lisatiedot == null ? '' : task.lisatiedot,
-      laakari: task.laakari
+      laakari: task.laakari == null ? '' : task.laakari.value
     };
   }
 
@@ -101,6 +107,29 @@ class ModifyEntry extends Component {
       esitietolomake: ""
     });
   }
+  
+  handleTutkimusPaivaChange(selectedDay, modifiers) {
+	  if (selectedDay == undefined) {
+	       // ignore
+	  } else {
+		  this.setState({
+			  tutkimusPaiva: selectedDay,
+			  tutkimusPaivaValid: "success"
+          });
+	  }
+  }
+
+  handleVastaanottoPaivaChange(selectedDay, modifiers) {
+	  if (selectedDay == undefined) {
+	       // ignore
+	  } else {
+		  this.setState({
+			  vastaanottoPaiva: selectedDay,
+			  vastaanottoPaivaValid: "success"
+          });
+	  }
+  }
+
 
   handleClick() {
     const tutkimusPaivaValid =
@@ -126,24 +155,20 @@ class ModifyEntry extends Component {
       tutkimusValid === "success" &&
       esitietolomakeValid === "success"
     ) {
-      const parms = postCreate({
-        Person: this.props.person,
-        Task: {
+      const parms = {
           taskId: this.state.taskId,
+          version: this.state.version,
           hetu: this.state.hetu,
           sukunimi: this.state.sukunimi,
-          tutkimus: {
-            examinationId: this.state.tutkimus.value
-          },
+          tutkimus: {value : this.state.tutkimus },
           tutkimusPaiva: this.state.tutkimusPaiva,
           vastaanottoPaiva: this.state.vastaanottoPaiva,
           lisatiedot: this.state.lisatiedot,
           esitietolomake: this.state.esitietolomake,
-          laakari: this.state.laakari
-        }
-      });
+          laakari: { value: this.state.laakari }
+        };
+      console.log(parms);
       this.props.dispatch(parms);
-      this.setState(this.clearValues());
     } else {
       this.setState({
         tutkimusPaivaValid: tutkimusPaivaValid,
@@ -156,20 +181,28 @@ class ModifyEntry extends Component {
   }
 
   render() {
+    const DAY_FORMAT = "D.M.YYYY";
+    const dayPickerProps = {
+    	      locale: "fi",
+    	      localeUtils: MomentLocaleUtils
+    };
+
     return (
       <div>
+      	<Modal.Header closeButton>
+      	<Modal.Title>Muokkaa lausuttavaa</Modal.Title>
+      	</Modal.Header>
+      	<Modal.Body>
         <FormGroup validationState={this.state.tutkimusPaivaValid}>
           <ControlLabel>TutkimuspÃ¤ivÃ¤</ControlLabel>
-          <FormControl
-            type="date"
-            value={this.state.tutkimusPaiva}
-            onChange={e => {
-              this.setState({
-                tutkimusPaiva: e.target.value,
-                tutkimusPaivaValid: "success"
-              });
-            }}
-          />
+          <div className="form-control">
+          <DayPickerInput
+          	value={this.state.tutkimusPaiva}
+          	format={DAY_FORMAT} placeholder={DAY_FORMAT}
+          	formatDate={formatDate} parseDate={parseDate}
+          	onDayChange={this.handleTutkimusPaivaChange}
+          	dayPickerProps={dayPickerProps} />
+          </div>
         </FormGroup>
         <FormGroup validationState={this.state.hetuValid}>
           <ControlLabel>HenkilÃ¶tunnus</ControlLabel>
@@ -195,45 +228,34 @@ class ModifyEntry extends Component {
         </FormGroup>
         <FormGroup validationState={this.state.tutkimusValid}>
           <ControlLabel>Tutkimus</ControlLabel>
-          <Select
-            closeOnSelect={true}
-            disabled={false}
-            onChange={value => {
-              this.setState({
-                tutkimus: value,
-                tutkimusValid: "success"
-              });
-            }}
-            options={this.props.examinationOptions}
-            placeholder="Valitse tutkimus"
-            removeSelected={false}
-            rtl={false}
-            simpleValue={false}
-            value={this.state.tutkimus}
-          />
+          <FormControl componentClass="select" 
+        	  value={this.state.tutkimus}
+          	  onChange={event => {this.setState({ tutkimus: event.target.value, tutkimusValid: "success"});}}
+          >
+          {this.props.examinationOptions.map(function (option) {
+        	return (
+        		<option key={option.value} value={option.value}>{option.label}</option>
+        	);  
+          })}
+          </FormControl>
           {false && <HelpBlock>SyÃ¶tÃ¤ tÃ¤hÃ¤n tutkimusmuoto</HelpBlock>}
         </FormGroup>
         <FormGroup validationState={this.state.vastaanottoPaivaValid}>
           <ControlLabel>VastaanottopÃ¤ivÃ¤</ControlLabel>
-          <FormControl
-            type="date"
-            value={this.state.vastaanottoPaiva}
-            onChange={e => {
-              this.setState({
-                vastaanottoPaiva: e.target.value,
-                vastaanottoPaivaValid: "success"
-              });
-            }}
-          />
+          <div className="form-control">
+          <DayPickerInput
+          	value={this.state.vastaanottoPaiva}
+          	format={DAY_FORMAT} placeholder={DAY_FORMAT}
+          	formatDate={formatDate} parseDate={parseDate}
+          	onDayChange={this.handleVastaanottoPaivaChange}
+          	dayPickerProps={dayPickerProps} />
+          </div>
         </FormGroup>
         <FormGroup>
           <ButtonToolbar>
-            <ToggleButtonGroup
-              type="radio"
-              name="options"
-              defaultValue={1}
-              onChange={this.handleEsitietolomakeToggle}
-            >
+            <ToggleButtonGroup style={{zIndex: 0}}
+              type="radio" name="options" defaultValue={this.state.esitietolomakeExpanded ? 2 : 1 }
+              onChange={this.handleEsitietolomakeToggle} >
               <ToggleButton value={1}>
                 Esitietolomaketta ei ole tÃ¤ytetty
               </ToggleButton>
@@ -241,6 +263,7 @@ class ModifyEntry extends Component {
             </ToggleButtonGroup>
           </ButtonToolbar>
         </FormGroup>
+        
         {this.state.esitietolomakeExpanded && (
           <FormGroup validationState={this.state.esitietolomakeValid}>
             <ControlLabel>Esitietolomakkeen tiedostonimi</ControlLabel>
@@ -255,6 +278,7 @@ class ModifyEntry extends Component {
             )}
           </FormGroup>
         )}
+        
         <FormGroup>
           <ControlLabel>LisÃ¤tiedot</ControlLabel>
           <FormControl
@@ -267,19 +291,31 @@ class ModifyEntry extends Component {
           />
           {false && <HelpBlock>SyÃ¶tÃ¤ tÃ¤hÃ¤n henkilÃ¶n sukunimi</HelpBlock>}
         </FormGroup>
-        <Button bsStyle="primary" onClick={this.handleClick}>
-          Talleta
-        </Button>
+        
+        <FormGroup >
+        	<ControlLabel>LÃ¤Ã¤kÃ¤ri</ControlLabel>
+        	<FormControl componentClass="select" placeholder="(Valitse)"
+        		value={this.state.laakari}
+        	  onChange={event => {this.setState({ laakari: event.target.value});}} >
+        	<option key={null} value={null}></option>
+        {this.props.doctorOptions.map(function (option) {
+      	return (
+      		<option key={option.value} value={option.value}>{option.label}</option>
+      	);  
+        })}
+        </FormControl>
+        {false && <HelpBlock>SyÃ¶tÃ¤ tÃ¤hÃ¤n arvioiva lÃ¤Ã¤kÃ¤ri</HelpBlock>}
+        </FormGroup>
+
+      
+        
+        </Modal.Body>
+        <Modal.Footer>
+        	<Button bsStyle="primary" onClick={this.handleClick}>Talleta</Button>
+        </Modal.Footer>
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-	  return {
-	    person: state.person,
-	    examinationOptions: state.examinationOptions
-	  };
-	}
-
-export default connect(mapStateToProps)(ModifyEntry);
+export default ModifyTaskModal;
