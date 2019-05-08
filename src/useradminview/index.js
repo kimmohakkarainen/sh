@@ -18,12 +18,7 @@ import {
 } from "react-bootstrap";
 
 import { connect } from "react-redux";
-import {
-  getUsers,
-  modifyUser,
-  openModifyUserModal,
-  openChangePasswordModal
-} from "../actions";
+import { getUsers, modifyUser } from "../actions";
 
 import CreateUserModal from "./createusermodal";
 import ChangePasswordModal from "./changepasswordmodal";
@@ -61,7 +56,6 @@ class UserAdminView extends Component {
   }
 
   handleModify(user) {
-    //    this.props.dispatch(openModifyUserModal(user));
     this.setState({ modifyUserModal: user });
   }
 
@@ -76,7 +70,6 @@ class UserAdminView extends Component {
 
   onHideModal() {
     this.setState(this.initState());
-    //    this.props.dispatch(getUsers(this.props.person));
   }
 
   render() {

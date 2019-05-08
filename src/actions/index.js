@@ -64,21 +64,3 @@ export function openDeleteTaskModal(task) {
     }
   };
 }
-
-export function openModifyUserModal(user) {
-  return {
-    type: "OPEN_MODIFY_USER_MODAL",
-    payload: {
-      modifyUserModal: user
-    }
-  };
-}
-
-export function openChangePasswordModal(user) {
-  return {
-    type: "OPEN_CHANGE_PASSWORD_MODAL",
-    payload: {
-      changePasswordModal: user
-    }
-  };
-}

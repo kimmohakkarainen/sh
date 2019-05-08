@@ -8,8 +8,6 @@ export default function poriState(
     modifyInfoModal: null,
     modifyMessageModal: null,
     deleteTaskModal: null,
-    modifyUserModal: null,
-    changePasswordModal: null,
     errorModal: null,
     passwordStatus: null,
     newTasks: [],
@@ -68,10 +66,7 @@ export default function poriState(
     const newstate = Object.assign({}, state, action.payload);
     return newstate;
   } else if (action.type === "FETCH_USERS_SUCCEEDED") {
-    const newstate = Object.assign({}, state, action.payload, {
-      modifyUserModal: null,
-      changePasswordModal: null
-    });
+    const newstate = Object.assign({}, state, action.payload);
     return newstate;
   } else if (action.type === "FETCH_EXAMINATIONS_SUCCEEDED") {
     const newstate = Object.assign({}, state, action.payload);

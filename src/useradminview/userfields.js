@@ -1,31 +1,15 @@
 import React, { Component } from "react";
-import ReactDOM, { render } from "react-dom";
+import PropTypes from "prop-types";
 
 import {
-  Modal,
-  Panel,
-  Button,
-  ToggleButton,
-  ButtonToolbar,
-  ToggleButtonGroup,
-  Grid,
-  Row,
-  Col,
-  Form,
   FormGroup,
   ControlLabel,
   FormControl,
   Checkbox,
-  InputGroup,
-  DropdownButton,
-  MenuItem,
-  HelpBlock,
-  Table
+  HelpBlock
 } from "react-bootstrap";
 
-import PropTypes from "prop-types";
-
-import { validationState } from "./common";
+import * as common from "./common";
 
 export class UserFields extends Component {
   constructor(props) {
@@ -37,7 +21,7 @@ export class UserFields extends Component {
 
   handleUsername(e) {
     const username = e.target.value;
-    const valid = username.length > 3;
+    const valid = common.isUsernameValid({ username: username });
 
     const state = Object.assign({}, this.props.state, {
       username: username,
@@ -48,7 +32,7 @@ export class UserFields extends Component {
 
   handleEmail(e) {
     const email = e.target.value;
-    const valid = /^[^@\s]+@[^@\s]+$/.test(email);
+    const valid = common.isEmailValid({ email: email });
     const state = Object.assign({}, this.props.state, {
       email: email,
       emailValid: valid
@@ -58,7 +42,7 @@ export class UserFields extends Component {
 
   handleFullname(e) {
     const fullname = e.target.value;
-    const valid = fullname.length > 3;
+    const valid = common.isFullnameValid({ fullname: fullname });
     const state = Object.assign({}, this.props.state, {
       fullname: fullname,
       fullnameValid: valid
@@ -81,7 +65,7 @@ export class UserFields extends Component {
     } = this.props.state;
     return (
       <div>
-        <FormGroup validationState={validationState(usernameValid)}>
+        <FormGroup validationState={common.validationState(usernameValid)}>
           <ControlLabel>Username</ControlLabel>
           <FormControl
             type="text"
@@ -90,10 +74,10 @@ export class UserFields extends Component {
             onChange={this.handleUsername}
           />
           {validation && !usernameValid && (
-            <HelpBlock>At least three characters needed</HelpBlock>
+            <HelpBlock>At least four characters needed</HelpBlock>
           )}
         </FormGroup>
-        <FormGroup validationState={validationState(emailValid)}>
+        <FormGroup validationState={common.validationState(emailValid)}>
           <ControlLabel>E-mail</ControlLabel>
           <FormControl
             type="text"
@@ -105,7 +89,7 @@ export class UserFields extends Component {
             <HelpBlock>Should be valid e-mail address</HelpBlock>
           )}
         </FormGroup>
-        <FormGroup validationState={validationState(fullnameValid)}>
+        <FormGroup validationState={common.validationState(fullnameValid)}>
           <ControlLabel>Fullname</ControlLabel>
           <FormControl
             type="text"
@@ -114,7 +98,7 @@ export class UserFields extends Component {
             onChange={this.handleFullname}
           />
           {validation && !fullnameValid && (
-            <HelpBlock>At least three characters needed</HelpBlock>
+            <HelpBlock>At least four characters needed</HelpBlock>
           )}
         </FormGroup>
         <FormGroup>

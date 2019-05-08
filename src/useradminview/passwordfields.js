@@ -10,7 +10,7 @@ import {
 
 import PropTypes from "prop-types";
 
-import { validationState } from "./common";
+import * as common from "./common";
 
 export class PasswordFields extends Component {
   constructor(props) {
@@ -21,7 +21,10 @@ export class PasswordFields extends Component {
 
   handlePassword(e) {
     const password = e.target.value;
-    const valid = this.props.state.password2 == password;
+    const valid = common.isPasswordValid({
+      password: password,
+      password2: this.props.state.password2
+    });
     this.props.onChange({
       password: password,
       password2Valid: valid
@@ -30,7 +33,10 @@ export class PasswordFields extends Component {
 
   handlePassword2(e) {
     const password2 = e.target.value;
-    const valid = this.props.state.password == password2;
+    const valid = common.isPasswordValid({
+      password2: password2,
+      password: this.props.state.password
+    });
     this.props.onChange({
       password2: password2,
       password2Valid: valid
@@ -46,7 +52,7 @@ export class PasswordFields extends Component {
     } = this.props.state;
     return (
       <div>
-        <FormGroup validationState={validationState(password2Valid)}>
+        <FormGroup validationState={common.validationState(password2Valid)}>
           <ControlLabel>Password</ControlLabel>
           <FormControl
             type="password"
@@ -55,7 +61,7 @@ export class PasswordFields extends Component {
             onChange={this.handlePassword}
           />
         </FormGroup>
-        <FormGroup validationState={validationState(password2Valid)}>
+        <FormGroup validationState={common.validationState(password2Valid)}>
           <ControlLabel>Repeat Password</ControlLabel>
           <FormControl
             type="password"
