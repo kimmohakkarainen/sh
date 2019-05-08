@@ -3,32 +3,20 @@ import ReactDOM from "react-dom";
 
 import { Modal, Button } from "react-bootstrap";
 import { createResponse, initState } from "./common";
-import { UserFields } from "./userfields";
 import { PasswordFields } from "./passwordfields";
 
-class CreateUserModal extends Component {
+class ChangePasswordModal extends Component {
   constructor(props) {
     super(props);
-    this.state = initState();
-    this.onHide = this.onHide.bind(this);
+    this.state = initState(props.user);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  onHide() {
-    this.setState(initState());
-    this.props.onHide();
-  }
-
   handleClick() {
-    console.log(this.state);
-    if (
-      this.state.usernameValid &&
-      this.state.emailValid &&
-      this.state.fullnameValid &&
-      this.state.password2Valid
-    ) {
+    if (this.state.password2Valid) {
       const params = createResponse(this.state);
-      this.setState(initState());
+      params.password = this.state.password;
+      console.log(params);
       this.props.onSubmit(params);
     } else {
       this.setState({ validation: true });
@@ -36,18 +24,18 @@ class CreateUserModal extends Component {
   }
 
   render() {
+    const { username, fullname } =
+      this.props.user == null
+        ? { username: "", fullname: "" }
+        : this.props.user;
     return (
-      <Modal show={this.props.show} onHide={this.onHide}>
+      <div>
         <Modal.Header closeButton>
-          <Modal.Title>Uusi Käyttäjä</Modal.Title>
+          <Modal.Title>
+            Vaihda salasana käyttäjälle "{fullname}" ({username})
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <UserFields
-            state={this.state}
-            onChange={value => {
-              this.setState(value);
-            }}
-          />
           <PasswordFields
             state={this.state}
             onChange={value => {
@@ -61,9 +49,9 @@ class CreateUserModal extends Component {
             Talleta
           </Button>
         </Modal.Footer>
-      </Modal>
+      </div>
     );
   }
 }
 
-export default CreateUserModal;
+export default ChangePasswordModal;

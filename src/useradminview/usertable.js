@@ -60,8 +60,22 @@ export default function UserTable(props) {
                 })}
               </td>
               <td>
-                <Button bsStyle="primary">Muokkaa</Button>
-                <Button bsStyle="warning">Salasana</Button>
+                <Button
+                  bsStyle="primary"
+                  onClick={() => {
+                    props.onModify(user);
+                  }}
+                >
+                  Muokkaa
+                </Button>
+                <Button
+                  bsStyle="warning"
+                  onClick={() => {
+                    props.onChangePassword(user);
+                  }}
+                >
+                  Salasana
+                </Button>
               </td>
             </tr>
           );
@@ -72,7 +86,9 @@ export default function UserTable(props) {
 }
 
 UserTable.propTypes = {
-  users: PropTypes.array.isRequired
+  users: PropTypes.array.isRequired,
+  onModify: PropTypes.func.isRequired,
+  onChangePassword: PropTypes.func.isRequired
 };
 
 UserTable.defaultProps = {

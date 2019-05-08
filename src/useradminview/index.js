@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import {
   Panel,
   Button,
+  Modal,
   Grid,
   Row,
   Col,
@@ -17,9 +18,17 @@ import {
 } from "react-bootstrap";
 
 import { connect } from "react-redux";
-import { getUsers, modifyUser } from "../actions";
+import {
+  getUsers,
+  modifyUser,
+  openModifyUserModal,
+  openChangePasswordModal
+} from "../actions";
 
 import CreateUserModal from "./createusermodal";
+import ChangePasswordModal from "./changepasswordmodal";
+import ModifyUserModal from "./modifyusermodal";
+
 import UserTable from "./usertable";
 
 class UserAdminView extends Component {
@@ -27,13 +36,17 @@ class UserAdminView extends Component {
     super(props);
     this.state = this.initState();
     this.handleNewUser = this.handleNewUser.bind(this);
+    this.handleModify = this.handleModify.bind(this);
+    this.handlePassword = this.handlePassword.bind(this);
     this.onHideModal = this.onHideModal.bind(this);
     this.submitUser = this.submitUser.bind(this);
   }
 
   initState() {
     return {
-      newUser: false
+      newUser: false,
+      changePasswordModal: null,
+      modifyUserModal: null
     };
   }
 
@@ -47,6 +60,15 @@ class UserAdminView extends Component {
     });
   }
 
+  handleModify(user) {
+    //    this.props.dispatch(openModifyUserModal(user));
+    this.setState({ modifyUserModal: user });
+  }
+
+  handlePassword(user) {
+    this.setState({ changePasswordModal: user });
+  }
+
   submitUser(user) {
     this.props.dispatch(modifyUser(user));
     this.setState(this.initState());
@@ -54,6 +76,7 @@ class UserAdminView extends Component {
 
   onHideModal() {
     this.setState(this.initState());
+    //    this.props.dispatch(getUsers(this.props.person));
   }
 
   render() {
@@ -65,6 +88,27 @@ class UserAdminView extends Component {
           onHide={this.onHideModal}
           onSubmit={this.submitUser}
         />
+        <Modal
+          show={this.state.changePasswordModal != null}
+          onHide={this.onHideModal}
+        >
+          <ChangePasswordModal
+            onHide={this.onHideModal}
+            onSubmit={this.submitUser}
+            user={this.state.changePasswordModal}
+          />
+        </Modal>
+        <Modal
+          show={this.state.modifyUserModal != null}
+          onHide={this.onHideModal}
+        >
+          <ModifyUserModal
+            onHide={this.onHideModal}
+            onSubmit={this.submitUser}
+            user={this.state.modifyUserModal}
+          />
+        </Modal>
+
         <Panel bsStyle="primary">
           <Panel.Heading>
             <Panel.Title toggle componentClass="h3">
@@ -72,7 +116,11 @@ class UserAdminView extends Component {
             </Panel.Title>
           </Panel.Heading>
           <Panel.Body>
-            <UserTable users={users} />
+            <UserTable
+              users={users}
+              onModify={this.handleModify}
+              onChangePassword={this.handlePassword}
+            />
             <Button bsStyle="primary" onClick={this.handleNewUser}>
               Luo uusi käyttäjä
             </Button>
@@ -86,7 +134,9 @@ class UserAdminView extends Component {
 function mapStateToProps(state) {
   return {
     person: state.person,
-    users: state.users
+    users: state.users,
+    modifyUserModal: state.modifyUserModal,
+    changePasswordModal: state.changePasswordModal
   };
 }
 
